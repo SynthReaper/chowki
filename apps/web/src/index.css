@@ -1,0 +1,327 @@
+/* ============================================================
+ * Project CHOWKI — Campus Outbreak Surveillance System
+ * Made by Synthreaper | github.com/synthreaper/chowki
+ * File: apps/web/src/index.css | Last Modified: 2026-08-22
+ * Design Language: Luminous Bio-Intelligence (Stitch High-Contrast Health System)
+ * ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Stitch Luminous Health Color Tokens */
+  --surface: #F7F9FD;
+  --surface-dim: #D8DADE;
+  --surface-bright: #F7F9FD;
+  --surface-container-lowest: #FFFFFF;
+  --surface-container-low: #F2F4F8;
+  --surface-container: #ECEEF2;
+  --surface-container-high: #E6E8EC;
+  --surface-container-highest: #E0E2E6;
+
+  --on-surface: #191C1F;
+  --on-surface-variant: #5F6E7B;
+  --inverse-surface: #1C2024;
+  --inverse-on-surface: #EFF1F5;
+
+  /* Vibrant Accent Tokens */
+  --primary: #516600;
+  --primary-container: #D9FF5F;
+  --on-primary-container: #2A3600;
+  --on-primary: #FFFFFF;
+  --primary-glow: rgba(217, 255, 95, 0.4);
+
+  --tertiary: #59569D;
+  --tertiary-container: #F2EEFF;
+  --tertiary-fixed-dim: #C4C0FF;
+  --on-tertiary-container: #6865AD;
+
+  --error: #BA1A1A;
+  --error-container: #FFDAD6;
+  --on-error-container: #93000A;
+  --crimson-glow: rgba(255, 51, 102, 0.35);
+
+  --cyan-accent: #00D2FF;
+  --cyan-container: #E0F7FF;
+
+  --amber-accent: #F59E0B;
+  --amber-container: #FEF3C7;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Border Radii */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-full: 9999px;
+
+  /* Soft Ambient Shadows */
+  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.08);
+  --shadow-dark: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.font-mono { font-family: var(--font-mono); }
+
+/* Hide scrollbars everywhere cleanly */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
+/* Main Dashboard Canvas */
+.luminous-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 32px 64px 32px;
+}
+
+/* Elevated Light Card */
+.luminous-card {
+  background: var(--surface-container-lowest);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--surface-container);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.luminous-card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--surface-container-high);
+}
+
+/* High-Contrast Charcoal Card (Sleep/Epi Analysis Style) */
+.luminous-dark-card {
+  background: var(--inverse-surface);
+  color: var(--inverse-on-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-dark);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.luminous-dark-card.alert-active {
+  border-color: rgba(255, 51, 102, 0.5);
+  box-shadow: 0 0 32px rgba(255, 51, 102, 0.25);
+}
+
+/* Ultra-Sleek Glassmorphic Telemetry Bar (No ugly scrollbars) */
+.luminous-ticker-bar {
+  background: #FFFFFF;
+  border: 1px solid var(--surface-container);
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  color: var(--on-surface-variant);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+.telemetry-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--surface-container-low);
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  color: var(--on-surface);
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.telemetry-chip:hover {
+  background: var(--surface-container);
+  border-color: var(--surface-container-high);
+}
+
+.telemetry-chip.alert {
+  background: var(--error-container);
+  color: var(--on-error-container);
+  border-color: rgba(186, 26, 26, 0.2);
+}
+
+.telemetry-chip.success {
+  background: #F4FDE2;
+  color: #364B00;
+  border-color: rgba(81, 102, 0, 0.2);
+}
+
+/* Pill Badges */
+.pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.badge-lime {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.badge-crimson {
+  background: var(--error-container);
+  color: var(--on-error-container);
+}
+
+.badge-lavender {
+  background: var(--tertiary-container);
+  color: var(--tertiary);
+}
+
+.badge-amber {
+  background: var(--amber-container);
+  color: #92400E;
+}
+
+/* Buttons */
+.pill-button {
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.pill-button:hover {
+  transform: translateY(-1px);
+}
+
+.pill-button:active {
+  transform: translateY(0);
+}
+
+.btn-lime {
+  background: var(--primary-container);
+  color: var(--on-primary-container);
+  box-shadow: 0 4px 14px var(--primary-glow);
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-lime:hover {
+  background: #CFF745;
+  box-shadow: 0 6px 20px var(--primary-glow);
+  transform: translateY(-1px);
+}
+
+.btn-crimson {
+  background: var(--error);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px var(--crimson-glow);
+  padding: 10px 20px;
+  font-size: 0.82rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-crimson:hover {
+  background: #D32F2F;
+  box-shadow: 0 6px 20px var(--crimson-glow);
+  transform: translateY(-1px);
+}
+
+.btn-ghost-pill {
+  background: transparent;
+  color: var(--on-surface-variant);
+  border: 1px solid var(--surface-container-high);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-ghost-pill:hover {
+  background: var(--surface-container-low);
+  color: var(--on-surface);
+}
+
+/* Pulse animation for live indicators */
+@keyframes livePulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 6px rgba(81, 102, 0, 0.6)); }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+@keyframes livePulseRed {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 8px rgba(255, 51, 102, 0.8)); }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.pulse-dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #516600;
+  animation: livePulse 2s infinite ease-in-out;
+}
+
+.pulse-dot-red {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #BA1A1A;
+  animation: livePulseRed 1.5s infinite ease-in-out;
+}

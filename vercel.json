@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "apps/web/package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
+      }
+    },
+    {
+      "src": "api/index.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/index.py"
+    },
+    {
+      "src": "/chowki.png",
+      "dest": "/apps/web/dist/chowki.png"
+    },
+    {
+      "src": "/favicon.png",
+      "dest": "/apps/web/dist/favicon.png"
+    },
+    {
+      "src": "/assets/(.*)",
+      "dest": "/apps/web/dist/assets/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/apps/web/dist/index.html"
+    }
+  ]
+}

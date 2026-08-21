@@ -1,0 +1,75 @@
+# ============================================================
+# Project CHOWKI — Campus Outbreak Surveillance System
+# Made by Synthreaper | github.com/synthreaper/chowki
+# File: infra/docker-compose.yml | Last Modified: 2026-08-22
+# ============================================================
+
+version: '3.8'
+
+services:
+  # 1. PostgreSQL with PostGIS extension
+  postgres:
+    image: postgis/postgis:16-3.4
+    container_name: chowki-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: chowki_admin
+      POSTGRES_PASSWORD: ${CHOWKI_DB_PASSWORD:-chowki_secure_pass_2026}
+      POSTGRES_DB: chowki_surveillance
+    ports:
+      - "5432:5432"
+    volumes:
+      - chowki_pgdata:/var/lib/postgresql/data
+      - ./postgres/migrations:/docker-entrypoint-initdb.d
+    networks:
+      - chowki-net
+
+  # 2. Redis In-Memory Temporal Aggregator
+  redis:
+    image: redis:7.2-alpine
+    container_name: chowki-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - chowki-net
+
+  # 3. FastAPI Backend Surveillance Engine
+  api:
+    build:
+      context: ../
+      dockerfile: infra/Dockerfile.api
+    container_name: chowki-api
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      CHOWKI_ENV: production
+      CHOWKI_DATABASE_URL: postgresql://chowki_admin:${CHOWKI_DB_PASSWORD:-chowki_secure_pass_2026}@postgres:5432/chowki_surveillance
+      CHOWKI_JWT_SECRET: ${CHOWKI_JWT_SECRET:-chowki-jwt-secret-min-32-chars-long!}
+    ports:
+      - "8000:8000"
+    networks:
+      - chowki-net
+
+  # 4. Vite React Web Dashboard
+  web:
+    build:
+      context: ../apps/web
+      dockerfile: ../../infra/Dockerfile.web
+    container_name: chowki-web
+    restart: unless-stopped
+    depends_on:
+      - api
+    ports:
+      - "80:80"
+    networks:
+      - chowki-net
+
+volumes:
+  chowki_pgdata:
+
+networks:
+  chowki-net:
+    driver: bridge
