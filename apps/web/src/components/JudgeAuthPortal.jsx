@@ -2,13 +2,13 @@
  * @component JudgeAuthPortal
  * @project Project CHOWKI — Campus Outbreak Surveillance System
  * @author Synthreaper | github.com/synthreaper/chowki
- * @description Hackathon Judge & Multi-Persona Authentication Gateway with 1-Click Role Switcher
+ * @description Hackathon Grand Jury & Role Designation Entry Portal (Full Landing & Switcher Modal)
  * @lastModified 2026-08-22
  */
 
 import React, { useState } from 'react';
 import { MOCK_USERS, authenticateMockUser } from '../data/mockUsers';
-import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock } from 'lucide-react';
+import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock, Zap } from 'lucide-react';
 
 export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, isModal = false }) {
   const [activeMode, setActiveMode] = useState('personas'); // 'personas' | 'manual'
@@ -52,18 +52,19 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: isModal ? '20px' : '0'
+      padding: isModal ? '20px' : '32px 16px',
+      minHeight: isModal ? 'auto' : '100vh'
     }}>
       <div
         className="luminous-card"
         style={{
           width: '100%',
-          maxWidth: '1080px',
+          maxWidth: '1120px',
           maxHeight: isModal ? '90vh' : 'none',
           overflowY: 'auto',
-          padding: '32px',
+          padding: isModal ? '32px' : '40px 36px',
           borderRadius: 'var(--radius-xl)',
-          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15)',
+          boxShadow: isModal ? '0 20px 60px rgba(0, 0, 0, 0.2)' : '0 12px 48px rgba(0, 0, 0, 0.05)',
           border: '1.5px solid var(--surface-container-high)',
           background: '#FFFFFF',
           position: 'relative'
@@ -94,6 +95,37 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </button>
         )}
 
+        {/* Brand Header for Landing Screen */}
+        {!isModal && (
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <div style={{
+              width: '68px',
+              height: '68px',
+              borderRadius: 'var(--radius-full)',
+              background: '#FFFFFF',
+              border: '3px solid var(--primary-container)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 8px 24px var(--primary-glow)',
+              marginBottom: '14px'
+            }}>
+              <img
+                src="/chowki.png"
+                alt="CHOWKI Logo"
+                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            </div>
+            <h1 style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
+              PROJECT CHOWKI
+            </h1>
+            <p style={{ fontSize: '0.88rem', color: 'var(--on-surface-variant)', fontWeight: '600', marginTop: '4px' }}>
+              Continuous Health Observation & Water-Kitchen Intelligence Radar
+            </p>
+          </div>
+        )}
+
         {/* Portal Header */}
         <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           <div style={{
@@ -109,14 +141,14 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
             marginBottom: '12px'
           }}>
             <Sparkles size={14} />
-            HACKATHON GRAND JURY & STAKEHOLDER ACCESS GATEWAY
+            HACKATHON GRAND JURY & STAKEHOLDER ROLE GATEWAY
           </div>
           
-          <h2 style={{ fontSize: '1.8rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
-            {isModal ? 'Switch Stakeholder Perspective' : 'Select Evaluation Perspective'}
+          <h2 style={{ fontSize: isModal ? '1.5rem' : '1.75rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
+            {isModal ? 'Switch Stakeholder Perspective' : 'Select Your Role & Launch Dedicated Dashboard'}
           </h2>
-          <p style={{ fontSize: '0.88rem', color: 'var(--on-surface-variant)', maxWidth: '680px', margin: '6px auto 0 auto' }}>
-            Project CHOWKI dynamically adapts permissions, analytical micro-scopes, and operational powers based on the user's role. Select a persona below for instant 1-click evaluation.
+          <p style={{ fontSize: '0.86rem', color: 'var(--on-surface-variant)', maxWidth: '720px', margin: '6px auto 0 auto' }}>
+            Every role in Project CHOWKI receives a tailored operational dashboard with role-specific telemetry, permissions, and containment powers. Select an evaluator persona below for instant 1-click entry.
           </p>
 
           {/* Mode Switcher */}
@@ -136,7 +168,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                 boxShadow: activeMode === 'personas' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none'
               }}
             >
-              ⚡ 1-Click Persona Login ({MOCK_USERS.length})
+              ⚡ 1-Click Role Login ({MOCK_USERS.length})
             </button>
             <button
               type="button"
@@ -171,7 +203,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                     background: isCurrent ? 'linear-gradient(135deg, #FAFDF0 0%, #FFFFFF 100%)' : '#FFFFFF',
                     border: `1.5px solid ${isCurrent ? 'var(--primary)' : 'var(--surface-container)'}`,
                     borderRadius: 'var(--radius-lg)',
-                    padding: '20px',
+                    padding: '22px',
                     cursor: 'pointer',
                     transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
                     position: 'relative',
@@ -181,12 +213,14 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                     boxShadow: isCurrent ? '0 8px 24px var(--primary-glow)' : 'var(--shadow-soft)'
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.transform = 'translateY(-3px)';
                     e.currentTarget.style.borderColor = 'var(--primary)';
+                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(0, 0, 0, 0.08)';
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = 'translateY(0)';
                     e.currentTarget.style.borderColor = isCurrent ? 'var(--primary)' : 'var(--surface-container)';
+                    e.currentTarget.style.boxShadow = isCurrent ? '0 8px 24px var(--primary-glow)' : 'var(--shadow-soft)';
                   }}
                 >
                   {isCurrent && (
@@ -196,12 +230,12 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                       right: '12px',
                       background: 'var(--primary-container)',
                       color: 'var(--on-primary-container)',
-                      padding: '2px 8px',
+                      padding: '3px 8px',
                       borderRadius: 'var(--radius-full)',
                       fontSize: '0.68rem',
                       fontWeight: '800'
                     }}>
-                      ACTIVE SESSION
+                      CURRENT ROLE
                     </span>
                   )}
 
@@ -209,22 +243,22 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                     {/* User Avatar + Title */}
                     <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                       <div style={{
-                        width: '46px',
-                        height: '46px',
+                        width: '48px',
+                        height: '48px',
                         borderRadius: 'var(--radius-full)',
                         background: user.avatarBg,
                         color: user.avatarColor,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        fontSize: '1.4rem',
+                        fontSize: '1.5rem',
                         flexShrink: 0,
                         border: '1px solid rgba(0,0,0,0.06)'
                       }}>
                         {user.emoji}
                       </div>
                       <div>
-                        <div style={{ fontSize: '0.96rem', fontWeight: '800', color: 'var(--on-surface)' }}>
+                        <div style={{ fontSize: '0.98rem', fontWeight: '800', color: 'var(--on-surface)' }}>
                           {user.name}
                         </div>
                         <div style={{ fontSize: '0.74rem', color: 'var(--on-surface-variant)', fontWeight: '600' }}>
@@ -258,7 +292,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                     {/* Capabilities bullets */}
                     <div style={{ borderTop: '1px solid var(--surface-container-low)', paddingTop: '10px', marginBottom: '16px' }}>
                       <div style={{ fontSize: '0.7rem', fontWeight: '700', color: 'var(--on-surface)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-                        Specialized Visibility & Powers:
+                        Designated Dashboard Powers:
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                         {user.keyCapabilities.slice(0, 3).map((cap, i) => (
@@ -277,10 +311,10 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                     className="pill-button"
                     style={{
                       width: '100%',
-                      padding: '10px 16px',
-                      background: isCurrent ? 'var(--primary)' : 'var(--surface-container-low)',
-                      color: isCurrent ? '#FFFFFF' : 'var(--on-surface)',
-                      fontSize: '0.8rem',
+                      padding: '11px 16px',
+                      background: isCurrent ? 'var(--primary)' : 'var(--primary-container)',
+                      color: isCurrent ? '#FFFFFF' : 'var(--on-primary-container)',
+                      fontSize: '0.82rem',
                       fontWeight: '800',
                       display: 'flex',
                       alignItems: 'center',
@@ -288,10 +322,11 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                       gap: '8px',
                       border: 'none',
                       borderRadius: 'var(--radius-full)',
-                      cursor: 'pointer'
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 14px var(--primary-glow)'
                     }}
                   >
-                    <span>{isCurrent ? 'Continue as ' + user.roleLabel : 'Launch ' + user.roleLabel + ' Console'}</span>
+                    <span>Launch {user.roleLabel} Dashboard</span>
                     <ArrowRight size={14} />
                   </button>
 
@@ -409,7 +444,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                 }}
               >
                 <Key size={16} />
-                Authenticate & Open Console
+                Authenticate & Open Designated Dashboard
               </button>
 
             </form>

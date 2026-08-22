@@ -25,19 +25,12 @@ import { fetchLiveRadar } from './api/client';
 import { Shield, Activity, Users, AlertTriangle, CheckCircle2, ArrowUpRight, Droplets, Utensils, Lock, Microscope, ShieldAlert, Sliders, ArrowRight, Sparkles, Radio, RefreshCw, User } from 'lucide-react';
 
 export default function App() {
-  // Authentication & Persona state
-  const [currentUser, setCurrentUser] = useState(() => {
-    try {
-      const saved = localStorage.getItem('chowki_current_user');
-      return saved ? JSON.parse(saved) : MOCK_USERS[0]; // Default to Grand Jury
-    } catch {
-      return MOCK_USERS[0];
-    }
-  });
+  // Authentication & Persona state - Starts with null so the Role Designation Portal opens first
+  const [currentUser, setCurrentUser] = useState(null);
   const [isPersonaModalOpen, setIsPersonaModalOpen] = useState(false);
 
   // Active Tab state
-  const [activeTab, setActiveTab] = useState(() => currentUser?.defaultTab || 'simulator');
+  const [activeTab, setActiveTab] = useState('radar');
   
   // Live Radar State
   const [radarData, setRadarData] = useState({
@@ -70,18 +63,13 @@ export default function App() {
 
   const handleSelectUser = (user) => {
     setCurrentUser(user);
-    try {
-      localStorage.setItem('chowki_current_user', JSON.stringify(user));
-    } catch {}
     setActiveTab(user.defaultTab || 'radar');
     setIsPersonaModalOpen(false);
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
-    try {
-      localStorage.removeItem('chowki_current_user');
-    } catch {}
+    setIsPersonaModalOpen(false);
   };
 
   const handleSwitchPersonaFromArena = (personaId) => {
@@ -89,7 +77,7 @@ export default function App() {
     handleSelectUser(user);
   };
 
-  // If user is logged out, show the full login portal
+  // FIRST SCREEN: If user is not logged in, show the Role Designation Gateway
   if (!currentUser) {
     return (
       <div className="luminous-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -134,27 +122,27 @@ export default function App() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <div style={{
-            width: '34px',
-            height: '34px',
+            width: '36px',
+            height: '36px',
             borderRadius: 'var(--radius-full)',
             background: currentUser.avatarBg,
             color: currentUser.avatarColor,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '1.1rem',
+            fontSize: '1.2rem',
             fontWeight: '800',
             flexShrink: 0
           }}>
             {currentUser.emoji}
           </div>
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--on-surface)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--on-surface)' }}>
                 Active Perspective: {currentUser.name} ({currentUser.roleLabel})
               </span>
-              <span className={`pill-badge ${currentUser.badgeClass}`} style={{ fontSize: '0.66rem', padding: '2px 8px' }}>
-                {currentUser.clearance}
+              <span className={`pill-badge ${currentUser.badgeClass}`} style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
+                🔒 {currentUser.clearance}
               </span>
             </div>
             <p style={{ fontSize: '0.74rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
@@ -168,10 +156,10 @@ export default function App() {
             type="button"
             onClick={() => setIsPersonaModalOpen(true)}
             className="btn-ghost-pill"
-            style={{ fontSize: '0.74rem', padding: '5px 12px' }}
+            style={{ fontSize: '0.74rem', padding: '6px 14px', background: '#FFFFFF' }}
           >
-            <RefreshCw size={11} />
-            Switch Perspective
+            <RefreshCw size={12} />
+            Switch Role / Persona
           </button>
         </div>
       </div>
