@@ -85,6 +85,8 @@ export default function App() {
           currentUser={null}
           onSelectUser={handleSelectUser}
           isModal={false}
+          radarData={radarData}
+          highestAlertLevel={radarData.highest_alert_level}
         />
       </div>
     );
@@ -502,6 +504,8 @@ export default function App() {
           onSelectUser={handleSelectUser}
           onClose={() => setIsPersonaModalOpen(false)}
           isModal={true}
+          radarData={radarData}
+          highestAlertLevel={radarData.highest_alert_level}
         />
       )}
 
