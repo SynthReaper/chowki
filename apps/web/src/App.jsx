@@ -20,14 +20,16 @@ import WardenPanel from './components/WardenPanel';
 import MessPortal from './components/MessPortal';
 import PrivacyHub from './components/PrivacyHub';
 import JudgeAuthPortal from './components/JudgeAuthPortal';
+import JudgeTourModal from './components/JudgeTourModal';
 import { MOCK_USERS, getPersonaById } from './data/mockUsers';
 import { fetchLiveRadar } from './api/client';
-import { Shield, Activity, Users, AlertTriangle, CheckCircle2, ArrowUpRight, Droplets, Utensils, Lock, Microscope, ShieldAlert, Sliders, ArrowRight, Sparkles, Radio, RefreshCw, User } from 'lucide-react';
+import { Shield, Activity, Users, AlertTriangle, CheckCircle2, ArrowUpRight, Droplets, Utensils, Lock, Microscope, ShieldAlert, Sliders, ArrowRight, Sparkles, Radio, RefreshCw, User, Award } from 'lucide-react';
 
 export default function App() {
   // Authentication & Persona state - Starts with null so the Role Designation Portal opens first
   const [currentUser, setCurrentUser] = useState(null);
   const [isPersonaModalOpen, setIsPersonaModalOpen] = useState(false);
+  const [isTourOpen, setIsTourOpen] = useState(false);
 
   // Active Tab state
   const [activeTab, setActiveTab] = useState('radar');
@@ -510,7 +512,45 @@ export default function App() {
         />
       )}
 
-      {/* 6. Footer Attribution */}
+      {/* 6. Interactive 60-Second Grand Jury Tour Modal */}
+      <JudgeTourModal
+        isOpen={isTourOpen}
+        onClose={() => setIsTourOpen(false)}
+        onNavigateTab={(t) => setActiveTab(t)}
+      />
+
+      {/* 7. Floating 60-Second Tour Trigger Pill */}
+      <button
+        type="button"
+        onClick={() => setIsTourOpen(true)}
+        className="pill-button"
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          zIndex: 9000,
+          background: 'linear-gradient(135deg, var(--primary) 0%, #364B00 100%)',
+          color: '#FFFFFF',
+          padding: '12px 20px',
+          borderRadius: 'var(--radius-full)',
+          fontSize: '0.84rem',
+          fontWeight: '800',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          boxShadow: '0 8px 28px rgba(81, 102, 0, 0.4)',
+          border: '2px solid rgba(255, 255, 255, 0.25)',
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease'
+        }}
+        onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+        onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1.0)'; }}
+      >
+        <Sparkles size={16} />
+        <span>60s Grand Jury Tour 🚀</span>
+      </button>
+
+      {/* 8. Footer Attribution */}
       <footer style={{
         marginTop: '44px',
         paddingTop: '20px',
