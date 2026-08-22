@@ -9,6 +9,7 @@
 [![Author](https://img.shields.io/badge/Made%20by-Synthreaper-black)](https://github.com/synthreaper/chowki)
 
 ---
+**🌐 Live Demo**: [**https://chowki-sr.vercel.app/**](https://chowki-sr.vercel.app/)
 
 ## 🎯 The Challenge Answered in 60 Seconds
 
@@ -54,9 +55,11 @@ Project CHOWKI answers this with a **Dual-Engine Disambiguation AI** where **bot
 
 ---
 
-## ⚡ Quick Start (Run in 30 Seconds)
+## ⚡ Quick Start & Live Demo
 
-### 1. Launch All Servers Concurrently
+> 🚀 **Live Production App**: [https://chowki-sr.vercel.app/](https://chowki-sr.vercel.app/)
+
+### 1. Launch All Servers Concurrently (Local Development)
 ```bash
 python scripts/run_dev.py
 ```
@@ -211,6 +214,7 @@ chowki/
 ## 👥 Authors & Attribution
 
 - **Project Lead & Developer**: **Synthreaper** ([github.com/synthreaper/chowki](https://github.com/synthreaper/chowki))
+- **Live Production App**: [https://chowki-sr.vercel.app/](https://chowki-sr.vercel.app/)
 - **Design Philosophy**: Stitch Luminous Health Bio-Intelligence Tokens
 - **License**: [MIT License](LICENSE)
 
