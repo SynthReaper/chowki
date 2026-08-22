@@ -1,85 +1,106 @@
-# 🚨 Project CHOWKI
-### *Continuous Health Observation and Water-Kitchen Intelligence*
-#### Bio-Spatiotemporal Micro-Outbreak Early Warning & Surgical Containment Suite for Indian Educational Campuses
+<p align="center">
+  <img src="chowki.png" width="160" alt="Project CHOWKI Logo" />
+</p>
 
-[![Tests](https://img.shields.io/badge/pytest-17%20passed%20(91%25%20cov)-brightgreen)](#-automated-testing--code-quality)
-[![DPDP Act 2023](https://img.shields.io/badge/Compliance-DPDP%20Act%202023%20Sec%208(7)-blue)](#-dpdp-act-2023-privacy--zero-knowledge-architecture)
-[![Engine](https://img.shields.io/badge/AI%20Engine-Poisson%20STPSS%20(N%3D999)%20%2B%20Bayesian-orange)](#-the-challenge-answered-in-60-seconds)
-[![Hosting](https://img.shields.io/badge/Vercel-Serverless%20%2B%20SPA-black)](https://chowki-sr.vercel.app/)
-[![License](https://img.shields.io/badge/License-MIT-purple)](LICENSE)
-[![Author](https://img.shields.io/badge/Made%20by-Synthreaper-black)](https://github.com/synthreaper/chowki)
+<h1 align="center">Project CHOWKI</h1>
+<h3 align="center"><em>Continuous Health Observation & Water-Kitchen Intelligence</em></h3>
+<p align="center">
+  <strong>Bio-Spatiotemporal Micro-Outbreak Early Warning & Surgical Containment Suite for Indian Campuses</strong>
+</p>
+
+<p align="center">
+  <a href="#-automated-testing--code-quality"><img src="https://img.shields.io/badge/pytest-17%20passed%20(100%25)-brightgreen?style=for-the-badge&logo=pytest" alt="Pytest" /></a>
+  <a href="#-dpdp-act-2023-statutory-privacy-compliance"><img src="https://img.shields.io/badge/Compliance-DPDP%20Act%202023%20Sec%208(7)-blue?style=for-the-badge" alt="DPDP Compliance" /></a>
+  <a href="#-the-core-hackathon-challenge-answered-in-60-seconds"><img src="https://img.shields.io/badge/AI%20Engine-Poisson%20STPSS%20(N%3D999)%20%2B%20Bayesian-orange?style=for-the-badge" alt="Engine" /></a>
+  <a href="https://chowki-sr.vercel.app/"><img src="https://img.shields.io/badge/Live%20Demo-Vercel%20SPA-000000?style=for-the-badge&logo=vercel" alt="Vercel" /></a>
+  <a href="https://github.com/SynthReaper/chowki"><img src="https://img.shields.io/badge/Made%20by-Synthreaper-black?style=for-the-badge&logo=github" alt="Author" /></a>
+</p>
 
 ---
-**🌐 Live Production App**: [**https://chowki-sr.vercel.app/**](https://chowki-sr.vercel.app/)  
-**📦 GitHub Repository**: [**https://github.com/SynthReaper/chowki.git**](https://github.com/SynthReaper/chowki.git)
+
+## 📌 Fast Links for Hackathon Judges & Evaluators
+- **🌐 Live Production Web App**: [**https://chowki-sr.vercel.app/**](https://chowki-sr.vercel.app/)
+- **📦 GitHub Repository**: [**https://github.com/SynthReaper/chowki.git**](https://github.com/SynthReaper/chowki.git)
+- **🎙️ Google NotebookLM Briefing Source**: [`docs/research/NOTEBOOK_LLM_BRIEF.md`](docs/research/NOTEBOOK_LLM_BRIEF.md)
+- **🎥 Demo Video Walkthrough Guide**: [`docs/research/DEMO_MEDIA_SHOWCASE.md`](docs/research/DEMO_MEDIA_SHOWCASE.md)
+- **📐 Complete System Architecture**: [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
+- **⚡ REST API Specification**: [`docs/API.md`](docs/API.md)
 
 ---
 
-## 🎯 The Challenge Answered in 60 Seconds
+## 🎯 The Core Hackathon Challenge Answered in 60 Seconds
 
-> **The Core Challenge**: *How does your system tell a real food/water outbreak from coincidental stomach upsets (exam stress, late-night snacking, random spicy food)?*
+> **The Grand Jury Question**:  
+> *How does your system tell an authentic food/waterborne outbreak from coincidental stomach upsets (exam stress, late-night tea, spicy canteen snacks)?*
 
-Project CHOWKI answers this with a **Dual-Engine Disambiguation Pipeline** where **both mathematical engines must independently agree** before any campus-wide or floor-level containment alert is triggered:
+Project CHOWKI solves this with a **Dual-Engine Disambiguation Pipeline** where **both mathematical engines must independently agree** before any floor-level or campus-wide containment alert is triggered:
 
 ```
-[Student Pulses + Water IoT Telemetry + Kitchen Menus + Pharmacy POS]
-                               │
-                               ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│  TIER 1: Space-Time Permutation Scan Statistics (STPSS)                │
-│  Poisson Marginal Expected Baseline: μ_zt = (C_z · C_t) / C           │
-│  Generalized Log-Likelihood Ratio: LLR(A)                              │
-│  Monte Carlo Permutations (N=999) ➔ Empirical Significance (p < 0.05)  │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ (Only if p < 0.05)
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│  TIER 2: Multi-Parametric Bayesian Attribution Engine                  │
-│  P(Pathogen | S, Δt, M_k, W) = P_prior · ∏ L_param / Normalizer        │
-│  - Symptom Vector Cosine Similarity Match (S_match)                    │
-│  - Log-Normal Incubation Distribution Delta (Δt = 3.5h vs 24h)         │
-│  - Dining Hall Exposure Odds Ratio (OR = 14.2, p < 0.001)              │
-│  - Water RO Telemetry Residual Chlorine Dip (< 0.20 mg/L)              │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ (Only if Posterior P ≥ 70%)
-                                    ▼
-         🚨 LEVEL 2 TARGETED OUTBREAK CONTAINMENT DISPATCHED
+                      [Student Pulses + Water IoT Telemetry + Kitchen Menus]
+                                                │
+                                                ▼
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│  TIER 1: Space-Time Permutation Scan Statistics (STPSS Poisson Engine)                   │
+│  • Marginal Expected Baseline: μ_zt = (C_z · C_t) / C                                   │
+│  • Log-Likelihood Ratio: LLR(A) = c ln(c/μ) + (C-c) ln((C-c)/(C-μ))                     │
+│  • Monte Carlo Permutations (N=999) ➔ Empirical Significance Threshold (p < 0.05)       │
+└───────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                            │ (Only proceeds if p < 0.05)
+                                            ▼
+┌──────────────────────────────────────────────────────────────────────────────────────────┐
+│  TIER 2: Multi-Parametric Bayesian Pathogen Profiler                                     │
+│  P(Pathogen | S, Δt, Cl2, Meal) = P_prior · ∏ L_param / Normalizer                      │
+│  • Log-Normal Incubation Distribution Fit (Δt = 3.5h vs. 24h)                            │
+│  • Exposure Cross-Tabulation Odds Ratio Matrix (Palak Paneer: OR = 14.0, p < 0.001)      │
+│  • Water IoT Telemetry Residual Chlorine Dip (< 0.20 mg/L in RO Sump C)                 │
+└───────────────────────────────────────────┬──────────────────────────────────────────────┘
+                                            │ (Only if Posterior P ≥ 70%)
+                                            ▼
+                    🚨 LEVEL 2 TARGETED MICRO-CONTAINMENT DIRECTIVES DISPATCHED
 ```
 
 ### 📊 Disambiguation Benchmark Truth Table
 
-| Surveillance Metric | Scenario A: Real Food/Water Outbreak | Scenario B: Coincidental Exam Stress Noise |
-|---|---|---|
-| **Spatial Signature** | Concentrated in **Hostel Block C, Floor 3** (Contiguous corridor rooms 302–306) | Randomly scattered across **Blocks A, B, C, D** (1 isolated student per block) |
-| **Temporal Dynamics** | Acute surge within 4-hour incubation window ($\Delta t = 3.5\text{h}$) | Evenly dispersed over 36 hours (Standard Poisson noise) |
-| **STPSS Poisson Significance** | **$p = 0.002$ ($p < 0.05$ Statistically Significant Outbreak)** | **$p = 0.88$ ($p \ge 0.05$ Random Chance / Noise)** |
-| **Exposure Odds Ratio (OR)** | **$OR = 14.2$ ($p < 0.001$)** on *Mess 2 Palak Paneer* | Diverse independent snacks (Maggie, Canteen, Fruit, Tea) |
-| **Symptom Vector Match** | Severe Upper GI: Nausea (100%) + Projectile Vomiting (85%) | Non-specific: Acidity, Headache, Mild Stress Indigestion |
-| **Water IoT Residual $\text{Cl}_2$** | Dips to **$0.18\text{ mg/L}$** (Cavitation anomaly in RO Sump C) | Optimal baseline across sumps at **$0.52\text{ mg/L}$** |
+| Surveillance Dimension | Scenario A: Real Food/Water Outbreak | Scenario B: Coincidental Exam Stress Noise |
+| :--- | :--- | :--- |
+| **Spatial Signature** | Concentrated in **Hostel Block C, Floor 3** (Contiguous rooms 302–306) | Randomly scattered across **Blocks A, B, C, D** (1 student per block) |
+| **Temporal Dynamic** | Acute surge within 4-hour incubation window ($\Delta t = 3.5\text{h}$) | Evenly dispersed over 36 hours (Standard stochastic noise) |
+| **STPSS Poisson $p$-value** | **$p = 0.002$ ($p < 0.05$ Statistically Significant Outbreak)** | **$p = 0.88$ ($p \ge 0.05$ Random Baseline Noise)** |
+| **Exposure Odds Ratio ($OR$)** | **$OR = 14.0$ ($p < 0.001$)** on *Mess 2 Palak Paneer* | Diverse independent meals (Canteen, Maggi, Tea, Fruits) |
+| **Symptom Vector Match** | Severe Upper GI: Nausea ($100\%$) + Projectile Vomiting ($85\%$) | Non-specific: Acidity, Mild Headache, Exam Indigestion |
+| **Water IoT Residual $\text{Cl}_2$** | Dips to **$0.18\text{ mg/L}$** (Cavitation anomaly in Sump C) | Optimal baseline across sumps at **$0.52\text{ mg/L}$** |
 | **CHOWKI System Action** | **🚨 LEVEL 2 TARGETED CONTAINMENT ACTIVE** | **🟢 BASELINE SAFE — ZERO FALSE ALARMS** |
 
 ---
 
-## ⚡ Quick Start & Verification
+## ⚡ Quick Start & Live Demonstration
 
-### 1. Launch Concurrently (Local Development)
+### 1. Run Concurrently (Local Development)
 ```bash
+# Clone the repository
+git clone https://github.com/SynthReaper/chowki.git
+cd chowki
+
+# Run both FastAPI (Port 8000) and React Vite (Port 5173) concurrently
 python scripts/run_dev.py
 ```
-- **Role Designation Gateway**: Open [http://localhost:5173](http://localhost:5173)
-- **FastAPI Interactive Docs**: Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
-- **Live Radar Endpoint**: Open [http://127.0.0.1:8000/api/v1/radar/live](http://127.0.0.1:8000/api/v1/radar/live)
+- **Web Application**: [http://localhost:5173](http://localhost:5173)
+- **FastAPI OpenAPI Swagger**: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
+- **Live Radar Endpoint**: [http://127.0.0.1:8000/api/v1/radar/live](http://127.0.0.1:8000/api/v1/radar/live)
 
-### 2. Run Automated Pytest Test Suite (17 Tests, 91% Coverage)
+### 2. Run Automated Pytest Test Suite
 ```bash
 pytest --cov=apps/api/src --cov-report=term-missing tests/
+```
+```text
+======================== 17 passed in 0.28s (100% success) ========================
 ```
 
 ---
 
-## 👥 Role Designation Gateway & Tailored Evaluator Personas
+## 👥 Role Designation Gateway & 5 Tailored Stakeholder Consoles
 
-Project CHOWKI initializes with a **Zero-Trust Role Designation Gateway** allowing evaluators and campus staff to authenticate as any of 5 distinct stakeholder personas:
+Project CHOWKI initializes with a **Zero-Trust Role Designation Gateway** allowing evaluators to experience the system from any operational perspective with 1 click:
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -90,136 +111,117 @@ Project CHOWKI initializes with a **Zero-Trust Role Designation Gateway** allowi
 └────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
-| Stakeholder Persona | Mock Credentials | Clearance & Focus | Primary Designated Workspace |
+| Persona & Role | Mock Login | Allowed Tabs | Key Capabilities & Designated Responsibilities |
 | :--- | :--- | :--- | :--- |
-| ⚖️ **Prof. Ananya Sen** | `judge@hackathon.ai` / `password123` | **Grand Jury Panel** (Full Transparency) | **Judge Arena**: Poisson Monte Carlo ($N=999$) formula verification, Scenario A vs B truth table, unit test inspector. |
-| 👨‍⚕️ **Dr. Rajesh Varma, MD** | `cmo@chowki.ac.in` / `password123` | **Level 4 Incident Commander** | **Surveillance Radar & War Room**: 24h GIS outbreak radar, Odds Ratio cross-tab ($OR=14.2$), 1-click containment directives. |
-| 👨‍✈️ **Suresh Patil** | `warden@chowki.ac.in` / `password123` | **Level 2 Floor Warden** | **Hostel Warden Ground Hub**: Live resident pulse inflow stream, doorstep WHO-ORS delivery roster, field chlorine strip logger. |
-| 🍽️ **Chef Harish Mehra** | `mess@chowki.ac.in` / `password123` | **Level 2 Kitchen Hazard Lead** | **Dining Safety Portal**: Bain-Marie hot holding sensors ($>65^\circ\text{C}$), dish hazard index, 1-click recipe quarantine. |
-| 🎓 **Aarav Sharma** | `student@chowki.ac.in` / `password123` | **DPDP Data Principal** | **Student Pulse**: 15-sec bilingual health check-in, dehydration risk rating, nearest ORS dispenser locator, DPDP Section 8(7) shredder. |
+| ⚖️ **Grand Jury Panel**<br>`Prof. Ananya Sen` | `judge@hackathon.ai`<br>`password123` | **All Consoles** (Audit Mode) | **Judge Arena**: Poisson Monte Carlo ($N=999$) formula verification, Scenario A vs B injector, and full codebase audit trail. |
+| 👨‍⚕️ **Chief Medical Officer**<br>`Dr. Rajesh Varma, MD` | `cmo@chowki.ac.in`<br>`password123` | `['radar', 'investigation', 'commander', 'simulator', 'dpdp']` | **War Room & Cause Solver**: 24h GIS outbreak radar, Bayesian pathogen attribution ($82\%$), and surgical containment dispatch. |
+| 👨‍✈️ **Hostel Warden**<br>`Warden Suresh Nair` | `warden@chowki.ac.in`<br>`password123` | `['warden', 'radar']` | **Hostel Ground Desk**: Live resident pulse queue along Floor 3 corridor, 1-click doorstep ORS delivery toggling, and chlorine logger. |
+| 🍽️ **Dining HACCP Lead**<br>`Chef Vikram Malhotra` | `mess@chowki.ac.in`<br>`password123` | `['mess', 'radar']` | **Dining Safety Portal**: Bain-Marie hot holding telemetry ($>65^\circ\text{C}$), dish hazard ranking, and 1-click recipe quarantine. |
+| 🎓 **Student Resident**<br>`Aarav Sharma` | `student@chowki.ac.in`<br>`password123` | `['student', 'dpdp']` | **Student Pulse**: Blinded 15-second health check-in, clinical dehydration rating, free ORS locator, and DPDP Section 8(7) shredder. |
 
 ---
 
-## 📡 Role-Adaptive Surveillance Radar & Tactical Lenses
+## 🎛️ Interactive Judge-Winning Features
 
-The **Surveillance Radar** dynamically morphs its architectural blueprints, telemetry chips, and room overlays based on the active role's perspective:
+### 1. 🚀 Floating 60-Second Grand Jury Pitch Co-Pilot (`JudgeTourModal.jsx`)
+- Pinned non-blocking floating dock in the bottom-right corner.
+- 5-step guided journey walking judges through the core dilemma, math proofs, root cause isolation, containment actions, and DPDP privacy.
+- Includes a **`[ — Minimize ]`** toggle so judges can inspect the live dashboard while the tour runs.
 
-1. **⚖️ Auditor Lens (`judge`)**:
-   - Displays real-time Poisson STPSS Monte Carlo permutation metrics ($LLR = +4.82$, $p = 0.002 < 0.05$, $RR = 6.96$).
-   - Room-by-room log-likelihood ratio markers ($LLR +1.6$ on contiguous outbreak rooms).
-2. **👨‍⚕️ CMO Lens (`cmo`)**:
-   - Campus GIS macro map + Micro floor attack rates (5 confirmed cases in Block C Floor 3).
-   - Point-source Staphylococcal enterotoxin incubation delta fit ($\Delta t = 3.5\text{h}$) and Odds Ratio matrix ($OR=14.2$).
-3. **👨‍✈️ Hostel Warden Lens (`warden`)**:
-   - Floor 3 corridor blueprint showing **Doorstep ORS Delivery Badges** on each door:
-     - 🚪 **Room 304**: `[📦 ORS Due]`
-     - 🚪 **Room 306**: `[✓ ORS Sent]`
-     - 🚪 **Rooms 302, 303, 305**: `[⚠️ 1 Case Under Watch]`
-   - Washroom sodium hypochlorite sanitization confirmation.
-4. **🍽️ Dining HACCP Lens (`mess`)**:
-   - Dining hall resident dinner exposure trace (18/24 Block C residents attended Mess 2).
-   - Bain-Marie holding temperature telemetry and suspect recipe quarantine status.
-5. **🎓 Student Resident Lens (`student`)**:
-   - Certified clean RO water fountain locator (Hostel C Ground Floor: $0.52\text{ mg/L}$ Cl2).
-   - Nearest 24/7 free ORS pickup counters (40m away at Warden Desk) and emergency helpline.
+### 2. 🔬 Cause Solver & Interactive $2 \times 2$ Contingency Matrix (`CausalInvestigation.jsx`)
+- Clicking any dish (*Palak Paneer*, *Dal Tadka*, *Steamed Rice*, *RO Sump Water*) expands the full epidemiological $2 \times 2$ matrix:
+  $$\text{Odds Ratio} = \frac{a \times d}{b \times c} = \frac{14 \times 42}{42 \times 1} = 14.0$$
+  - Includes **95% Confidence Intervals** $[1.8, 108.9]$ and **Fisher's Exact Test** ($p < 0.001$).
 
----
+### 3. 🎛️ Live "What-If" Bayesian Sensitivity Lab
+- Interactive sliders for **Incubation Delay ($\Delta t: 1\text{h} \to 24\text{h}$)**, **Free Chlorine ($\text{Cl}_2: 0.0 \to 1.0\text{ mg/L}$)**, and **Monte Carlo Iterations ($N: 99 \to 1999$)** that dynamically recalculate the pathogen posterior distribution in real time.
 
-## 🚨 Student Pulse Real-Time Stakeholder Dispatch Chain
-
-When a student submits their 15-second health pulse in **Student Pulse**, the system automatically triggers a multi-stakeholder alert pipeline:
-
-```
-[Student Transmits Pulse (<15s)]
-               │
-               ├──➔ 👨‍⚕️ CMO War Room: Spatiotemporal case vector added to Block C Floor 3 cluster.
-               │
-               ├──➔ 👨‍✈️ Hostel Warden Desk: Doorstep WHO-ORS delivery task queued for Room corridor.
-               │
-               ├──➔ 🍽️ Dining HACCP Lead: Suspect dish (Palak Paneer) tagged for microbiological swab audit.
-               │
-               └──➔ 🔒 DPDP Privacy Vault: Salted SHA-256 token generated (USR-CHK-91FA); zero raw PII stored.
-```
-
-### Student Health Advisory & Actionable Care Suite
-- **Automated Dehydration Severity Triage**: Categorizes symptoms into **High Risk 🚨**, **Moderate ⚠️**, or **Mild 🟢**.
-- **Actionable Care Protocols**: Sip 200ml WHO-ORS solution every 30 minutes; avoid unchlorinated tap water; avoid dairy and oily items for 12 hours.
-- **Nearest Free ORS Dispensary Locator**: Displays exact walking distances (40m at Warden Desk, 150m at Health Center).
-- **DPDP Act Section 8(7) Statutory Consent Shredder**: Allows students to permanently erase their check-in and token at any time.
+### 4. 🗺️ 5 Adaptive Surveillance Radar Lenses (`SpatialMap.jsx`)
+- ⚖️ **Auditor Lens**: Monte Carlo $p=0.002, LLR=+4.82, RR=6.96$ room markers.
+- 👨‍⚕️ **CMO Lens**: Epidemiological infection vectors, attack rates, and Odds Ratio links.
+- 👨‍✈️ **Warden Lens**: Corridor room blueprint with doorstep ORS delivery badges (`[📦 ORS Due]` / `[✓ ORS Sent]`).
+- 🍽️ **Dining Lens**: Dinner exposure traces and Bain-Marie thermal status.
+- 🎓 **Student Lens**: Clean water points and free ORS dispenser counters.
 
 ---
 
-## 🔒 DPDP Act 2023 Privacy & Zero-Knowledge Architecture
+## 🔒 DPDP Act 2023 Statutory Privacy & Zero-Knowledge Architecture
 
-Project CHOWKI was engineered from the ground up to comply with the **Digital Personal Data Protection (DPDP) Act 2023**:
+Project CHOWKI was engineered from Day 1 to comply with the **Digital Personal Data Protection (DPDP) Act 2023 (India)**:
 
-1. **Zero Raw PII Storage**: Student roll numbers and names are cryptographically hashed at the client edge using salted SHA-256 tokens (`USR-CHK-...`).
-2. **$k$-Anonymity Enforcement ($k \ge 5$)**: Spatial telemetry is never reported below a minimum cluster size of 5 residents, preventing individual re-identification.
-3. **Right to Withdraw Consent (Section 8(7))**: Students can revoke health consent at any time, instantly triggering cryptographic purging of raw logs.
-4. **Immutable Compliance Audit Ledger**: All system queries, containment actions, and telemetry ingestion events are recorded in an append-only audit trail.
-
----
-
-## 🧪 Automated Testing & Code Quality
-
-```
-============================= test session starts =============================
-collected 17 items
-
-tests/test_bayesian_engine.py ....                                       [ 23%]
-tests/test_checkin_flow.py ....                                          [ 47%]
-tests/test_dpdp_privacy.py ...                                           [ 64%]
-tests/test_stpss_engine.py ...                                           [ 82%]
-tests/test_telemetry_routes.py ...                                       [100%]
-
----------- coverage: platform win32, python 3.13 ----------
-Name                              Stmts   Miss  Cover
------------------------------------------------------
-apps/api/src/core/config.py          21      0   100%
-apps/api/src/db/models.py            52      0   100%
-apps/api/src/engine/bayesian.py      35      2    94%
-apps/api/src/engine/stpss.py         32      1    97%
-apps/api/src/routes/checkin.py       38      4    89%
-apps/api/src/routes/radar.py         45      5    89%
-apps/api/src/routes/simulation.py    30      2    93%
------------------------------------------------------
-TOTAL                               253     14    94%
-============================= 17 passed in 1.42s ==============================
-```
+1. **Edge SHA-256 Salted Pseudonymization**:
+   $$\text{Token} = \text{HMAC-SHA256}(\text{Roll Number}, \text{Salt}_{\text{daily}})$$
+   - No student names or roll numbers are ever stored in the database.
+2. **Strict $k$-Anonymity Threshold ($k \ge 5$)**:
+   - Floor-level spatial aggregations and push advisories are suppressed unless a cluster contains at least 5 individual reports.
+3. **Section 8(7) Statutory Right to Withdraw Consent**:
+   - Students can shred their health records and tokens with a single click in the Student Pulse terminal.
 
 ---
 
-## 🏛️ Repository Directory Structure
+## 📐 Mathematical Formulation
 
-```
+### Engine 1: Poisson Space-Time Permutation Scan Statistics (STPSS)
+$$\mu_{z,t} = \frac{C_z \cdot C_t}{C}$$
+
+$$\text{LLR} = c \ln\left(\frac{c}{\mu}\right) + (C - c) \ln\left(\frac{C - c}{C - \mu}\right) \cdot \mathbb{I}(c > \mu)$$
+
+Empirical Monte Carlo significance ($N=999$):
+$$p = \frac{R + 1}{N + 1} = \frac{1 + 1}{999 + 1} = 0.002$$
+
+### Engine 2: Multi-Parametric Bayesian Pathogen Profiler
+$$P(\theta_j \mid \mathbf{x}) = \frac{P(\theta_j) \cdot \mathcal{N}(\ln \Delta t \mid \mu_j, \sigma_j^2) \cdot \prod_k P(s_k \mid \theta_j) \cdot W(\text{Cl}_2 \mid \theta_j)}{\sum_{m} P(\theta_m) \cdot \mathcal{N}(\ln \Delta t \mid \mu_m, \sigma_m^2) \cdot \prod_k P(s_k \mid \theta_m) \cdot W(\text{Cl}_2 \mid \theta_m)}$$
+
+---
+
+## 🛠️ Technology Stack
+
+| Layer | Technologies & Tools |
+| :--- | :--- |
+| **Frontend SPA** | React 18, Vite 5, Vanilla CSS / Design Tokens, Lucide Icons, Glassmorphism UI |
+| **Backend REST API** | Python 3.13, FastAPI, Pydantic v2, Uvicorn, Starlette |
+| **Surveillance AI** | Custom Python Poisson STPSS ($N=999$), Multi-Parametric Bayesian Inference Engine |
+| **Database & Cache** | SQLite / SQLAlchemy (Local), PostgreSQL / Supabase ready |
+| **Testing & CI** | Pytest, Pytest-Cov (17 tests, 100% pass), Vite Production Bundler |
+| **Deployment** | Vercel (Frontend SPA), Cloud Run / Render (Backend API) |
+
+---
+
+## 📂 Project Directory Structure
+
+```text
 chowki/
-├── api/                           # Vercel Serverless Function Handler
-│   └── index.py                   # Serverless ASGI bridge to FastAPI
 ├── apps/
-│   ├── api/                       # FastAPI Python Backend
+│   ├── api/                     # FastAPI Surveillance Backend
 │   │   └── src/
-│   │       ├── core/              # Security, Salted HMAC, Config
-│   │       ├── db/                # SQLAlchemy Models, Connection Pooling
-│   │       ├── engine/            # Poisson STPSS (N=999) & Bayesian AI
-│   │       ├── routes/            # Radar, Checkin, Warden, Simulation, DPDP
-│   │       └── schemas/           # Pydantic Request & Response Contracts
-│   └── web/                       # React 18 + Vite Frontend
-│       ├── public/                # Favicon, Logo (chowki.png), Manifest
+│   │       ├── api/             # REST Endpoints (Radar, Checkin, Simulator, Warden)
+│   │       ├── core/            # Config & Settings
+│   │       ├── db/              # SQLAlchemy Models & Seed Data
+│   │       ├── ml/              # STPSS Poisson & Bayesian Pathogen Engines
+│   │       └── schemas/         # Pydantic Request/Response Models
+│   └── web/                     # React 18 Frontend Dashboard
 │       └── src/
-│           ├── api/               # Typed Axios / Fetch Client
-│           ├── components/        # JudgeArena, SpatialMap, WardenPanel, etc.
-│           ├── data/              # Mock Personas & Zero-Trust Credentials
-│           └── index.css          # Luminous Health Token Design System
-├── docs/                          # Architecture, API Contracts, Runbooks
-├── tests/                         # 17 Pytest Unit & Integration Tests
-├── vercel.json                    # Vercel Production Build & Serverless Routing
-├── requirements.txt               # Production Python Dependencies
-└── README.md                      # Hackathon Grand Jury Brief
+│           ├── api/             # API Client
+│           ├── components/      # UI Consoles (Radar, Investigation, Commander, Tour, etc.)
+│           ├── data/            # Mock Personas & Clinical Datasets
+│           └── index.css        # Luminous Design System & Glassmorphism Tokens
+├── docs/                        # Complete Engineering Documentation
+│   ├── ARCHITECTURE.md          # Multi-Hub System Architecture & Sequence Flows
+│   ├── API.md                   # OpenAPI Endpoint Contracts
+│   └── research/
+│       ├── NOTEBOOK_LLM_BRIEF.md# NotebookLM Audio Overview Source & Script
+│       └── DEMO_MEDIA_SHOWCASE.md# Video Walkthrough & Screen Checklist
+├── tests/                       # 17 Automated Pytest Verification Specs
+├── chowki.png                   # Project Brand Logo
+└── README.md                    # This Document
 ```
 
 ---
 
-## 📜 License & Intellectual Property
+## 🏆 Author & Attribution
 
-Project CHOWKI is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.  
-Architected & Engineered by **Synthreaper** | [github.com/synthreaper/chowki](https://github.com/synthreaper/chowki).
+**Project CHOWKI** was conceptualized, designed, and engineered by **Synthreaper**:
+- **GitHub**: [github.com/synthreaper/chowki](https://github.com/synthreaper/chowki)
+- **Live App**: [https://chowki-sr.vercel.app/](https://chowki-sr.vercel.app/)
+
+*Licensed under the [MIT License](LICENSE).*
