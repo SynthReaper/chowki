@@ -225,16 +225,20 @@ export default function JudgeAuthPortal({
             {isModal ? 'Switch Stakeholder Perspective' : 'Bio-Spatiotemporal Outbreak Surveillance Radar'}
           </h1>
           
-          <p style={{
+          <div style={{
             fontSize: '0.88rem',
             color: 'var(--on-surface-variant)',
             maxWidth: '740px',
             margin: '0 auto 16px auto',
             lineHeight: 1.5,
-            fontWeight: '500'
+            fontWeight: '500',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '4px'
           }}>
-            Continuous Health Observation & Water-Kitchen Intelligence for Indian Campuses. Select a stakeholder role below to launch their specialized operational workspace.
-          </p>
+            <span>Continuous Health Observation &amp; Water-Kitchen Intelligence for Indian Campuses.</span>
+            <span>Select a stakeholder role below to launch their specialized operational workspace.</span>
+          </div>
 
           {/* Mode Switcher */}
           <div style={{
