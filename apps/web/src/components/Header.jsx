@@ -8,6 +8,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Radio, Microscope, ShieldAlert, Sliders, Activity, UserCheck, Utensils, Lock, Clock, LogOut, RefreshCw, User, Sparkles } from 'lucide-react';
+import { getPersonaById } from '../data/mockUsers';
 
 export default function Header({
   activeTab,
@@ -65,8 +66,9 @@ export default function Header({
     { id: 'dpdp', label: 'Privacy Vault', icon: Lock },
   ];
 
-  // Filter tabs by user's security permissions (or show all if Judge / CMO)
-  const userAllowedTabs = currentUser?.allowedTabs || ['radar', 'investigation', 'commander', 'simulator', 'student', 'warden', 'mess', 'dpdp'];
+  // Strictly query active persona security permissions from live data definition
+  const activePersona = currentUser?.id ? getPersonaById(currentUser.id) : currentUser;
+  const userAllowedTabs = activePersona?.allowedTabs || (currentUser?.allowedTabs || ['radar', 'warden']);
   const visibleNavItems = allNavItems.filter(item => userAllowedTabs.includes(item.id));
 
   return (
