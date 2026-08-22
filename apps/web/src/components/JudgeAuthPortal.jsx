@@ -2,13 +2,13 @@
  * @component JudgeAuthPortal
  * @project Project CHOWKI — Campus Outbreak Surveillance System
  * @author Synthreaper | github.com/synthreaper/chowki
- * @description Hackathon Grand Jury & Role Designation Entry Portal (Full Landing & Switcher Modal)
+ * @description Hackathon Grand Jury & Role Designation Entry Portal with Live Campus Advisory Feed
  * @lastModified 2026-08-22
  */
 
 import React, { useState } from 'react';
 import { MOCK_USERS, authenticateMockUser } from '../data/mockUsers';
-import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock, Zap, Radio, Sliders } from 'lucide-react';
+import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock, Zap, Radio, Sliders, AlertTriangle, Droplets, MapPin, Bell, Megaphone } from 'lucide-react';
 
 export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, isModal = false }) {
   const [activeMode, setActiveMode] = useState('personas'); // 'personas' | 'manual'
@@ -62,7 +62,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           maxWidth: '1140px',
           maxHeight: isModal ? '90vh' : 'none',
           overflowY: 'auto',
-          padding: isModal ? '32px' : '44px 40px',
+          padding: isModal ? '32px' : '40px 36px',
           borderRadius: 'var(--radius-xl)',
           boxShadow: isModal ? '0 20px 60px rgba(0, 0, 0, 0.2)' : '0 16px 48px rgba(0, 0, 0, 0.04)',
           border: '1.5px solid var(--surface-container-high)',
@@ -95,35 +95,80 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </button>
         )}
 
-        {/* Unified Hero Header */}
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        {/* 1. LIVE CAMPUS HEALTH ADVISORY & BREAKING NEWS BULLETIN */}
+        <div style={{
+          background: 'linear-gradient(135deg, #FFF5F5 0%, #FFFFFF 100%)',
+          border: '1.5px solid var(--error-container)',
+          borderRadius: 'var(--radius-lg)',
+          padding: '14px 20px',
+          marginBottom: '28px',
+          boxShadow: '0 4px 14px rgba(186, 26, 26, 0.06)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '8px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span className="pulse-dot-red"></span>
+              <span style={{ fontSize: '0.76rem', fontWeight: '800', color: '#BA1A1A', letterSpacing: '0.04em', textTransform: 'uppercase' }}>
+                🚨 LIVE CAMPUS EPIDEMIOLOGICAL ADVISORY & HEALTH BULLETIN
+              </span>
+            </div>
+            <span className="pill-badge badge-crimson" style={{ fontSize: '0.68rem', padding: '2px 8px' }}>
+              Level 2 Targeted Advisory
+            </span>
+          </div>
+
+          <p style={{ fontSize: '0.84rem', color: '#191C1F', lineHeight: 1.45, fontWeight: '600', marginBottom: '10px' }}>
+            Micro-outbreak cluster confirmed in <strong>Hostel Block C (Floor 3)</strong>. Suspect dish <strong>Mess 2 Palak Paneer</strong> has been quarantined. Free WHO-ORS packets are available at the <strong>Warden Desk (Ground Floor)</strong>. RO sump chlorination elevated to <strong>2.0 mg/L</strong>.
+          </p>
+
+          {/* Live Telemetry Breaking News Chips */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+            <div className="telemetry-chip alert" style={{ fontSize: '0.7rem', padding: '3px 10px' }}>
+              <Droplets size={12} />
+              <span>RO-01 Chlorine: <strong>0.18 mg/L (⚠️ Auto-Dosing)</strong></span>
+            </div>
+            <div className="telemetry-chip alert" style={{ fontSize: '0.7rem', padding: '3px 10px' }}>
+              <Utensils size={12} />
+              <span>Mess 2 Service: <strong>Palak Paneer Quarantined</strong></span>
+            </div>
+            <div className="telemetry-chip" style={{ fontSize: '0.7rem', padding: '3px 10px' }}>
+              <UserCheck size={12} style={{ color: 'var(--primary)' }} />
+              <span>Warden Block C: <strong>Doorstep Delivery Active</strong></span>
+            </div>
+            <div className="telemetry-chip" style={{ fontSize: '0.7rem', padding: '3px 10px' }}>
+              <Lock size={12} style={{ color: '#59569D' }} />
+              <span>DPDP Vault: <strong>17 Pulses Anonymized (k&ge;5)</strong></span>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Unified Hero Header */}
+        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
           
           {/* Logo Badge Container */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '10px 18px',
-            background: 'linear-gradient(135deg, #FFFFFF 0%, var(--surface-container-low) 100%)',
+            padding: '8px 16px',
+            background: '#FFFFFF',
             border: '1.5px solid var(--primary-container)',
             borderRadius: 'var(--radius-full)',
-            boxShadow: '0 6px 20px var(--primary-glow)',
-            marginBottom: '16px',
-            gap: '12px'
+            boxShadow: '0 4px 14px var(--primary-glow)',
+            marginBottom: '14px',
+            gap: '10px'
           }}>
             <img
               src="/chowki.png"
               alt="CHOWKI Logo"
               style={{
-                width: '32px',
-                height: '32px',
-                objectFit: 'contain',
-                borderRadius: '6px'
+                width: '28px',
+                height: '28px',
+                objectFit: 'contain'
               }}
               onError={(e) => { e.target.style.display = 'none'; }}
             />
             <span style={{
-              fontSize: '0.82rem',
+              fontSize: '0.8rem',
               fontWeight: '800',
               color: 'var(--on-surface)',
               letterSpacing: '0.04em',
@@ -134,7 +179,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </div>
 
           <h1 style={{
-            fontSize: isModal ? '1.75rem' : '2.3rem',
+            fontSize: isModal ? '1.6rem' : '2.1rem',
             fontWeight: '800',
             color: 'var(--on-surface)',
             letterSpacing: '-0.03em',
@@ -145,37 +190,15 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </h1>
           
           <p style={{
-            fontSize: '0.92rem',
+            fontSize: '0.88rem',
             color: 'var(--on-surface-variant)',
             maxWidth: '740px',
             margin: '0 auto 16px auto',
             lineHeight: 1.5,
             fontWeight: '500'
           }}>
-            Continuous Health Observation & Water-Kitchen Intelligence for Indian Educational Campuses. Select a stakeholder persona below to enter their specialized operational workspace.
+            Continuous Health Observation & Water-Kitchen Intelligence for Indian Campuses. Select a stakeholder role below to launch their specialized operational workspace.
           </p>
-
-          {/* Engine Capability Pills */}
-          {!isModal && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
-              <span className="pill-badge badge-lime" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-                <span className="pulse-dot-green"></span>
-                Dual-Engine AI Active
-              </span>
-              <span className="telemetry-chip">
-                <Radio size={12} style={{ color: 'var(--primary)' }} />
-                <span>Poisson STPSS ($N=999, p&lt;0.05$)</span>
-              </span>
-              <span className="telemetry-chip">
-                <Microscope size={12} style={{ color: 'var(--tertiary)' }} />
-                <span>Bayesian Pathogen Attribution</span>
-              </span>
-              <span className="telemetry-chip">
-                <Lock size={12} style={{ color: '#59569D' }} />
-                <span>DPDP Act 2023 Compliant</span>
-              </span>
-            </div>
-          )}
 
           {/* Mode Switcher */}
           <div style={{
@@ -225,7 +248,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </div>
         </div>
 
-        {/* MODE 1: 1-CLICK PERSONA CARDS */}
+        {/* 3. MODE 1: 1-CLICK PERSONA CARDS */}
         {activeMode === 'personas' && (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(310px, 1fr))', gap: '16px' }}>
             {MOCK_USERS.map((user) => {
@@ -371,7 +394,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </div>
         )}
 
-        {/* MODE 2: MANUAL FORM WITH QUICK-FILL CHIPS */}
+        {/* 4. MODE 2: MANUAL FORM WITH QUICK-FILL CHIPS */}
         {activeMode === 'manual' && (
           <div style={{ maxWidth: '520px', margin: '0 auto' }}>
             
