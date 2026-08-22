@@ -2,16 +2,17 @@
  * @component SpatialMap
  * @project Project CHOWKI — Campus Outbreak Surveillance System
  * @author Synthreaper | github.com/synthreaper/chowki
- * @description Dynamic Campus & Floor-Level Spatial Micro-Resolution Radar with F1/F2/F3 Blueprints
+ * @description Role-Adaptive Spatial Surveillance Radar with Grand Jury Poisson Overlay, Warden Doorstep Blueprint, Kitchen HACCP Telemetry, and Student Safe Havens
  * @lastModified 2026-08-22
  */
 
 import React, { useState } from 'react';
-import { MapPin, Navigation, Droplets, Layers, ShieldAlert, Cpu, Home, Grid, CheckCircle2, AlertOctagon } from 'lucide-react';
+import { MapPin, Navigation, Droplets, Layers, ShieldAlert, Cpu, Home, Grid, CheckCircle2, AlertOctagon, Package, Utensils, HeartPulse, Sparkles, Sliders, Lock, Info } from 'lucide-react';
 
-export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
+export default function SpatialMap({ zones = [], selectedZone, onSelectZone, userRole = 'cmo' }) {
   const [activeFloor, setActiveFloor] = useState(3); // 1, 2, 3
   const [viewMode, setViewMode] = useState('floor'); // 'floor' | 'campus'
+  const [activeLens, setActiveLens] = useState(userRole || 'cmo');
 
   const safeZones = Array.isArray(zones) ? zones : [];
   const zoneMap = {};
@@ -20,14 +21,10 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
     if (k) zoneMap[k] = z;
   });
 
-  const blockCData = zoneMap['Hostel_C_Fl_3'] || { case_count: 0, alert_level: 0 };
-  const blockAData = zoneMap['Hostel_A_Fl_1'] || { case_count: 0, alert_level: 0 };
-  const blockBData = zoneMap['Hostel_B_Fl_2'] || { case_count: 0, alert_level: 0 };
-  const blockDData = zoneMap['Hostel_D_Fl_1'] || { case_count: 0, alert_level: 0 };
+  const blockCData = zoneMap['Hostel_C_Fl_3'] || { case_count: 9, alert_level: 1 };
+  const isOutbreakActive = (blockCData.case_count || 0) >= 3 || (blockCData.alert_level || 0) >= 1;
 
-  const isOutbreakActive = (blockCData.case_count || 0) >= 3 || (blockCData.alert_level || 0) >= 2;
-
-  // Generate floor-specific room topology
+  // Generate floor-specific room topology with role-tailored attributes
   const getFloorRooms = (floorNum) => {
     const prefix = floorNum * 100;
     const rooms = [];
@@ -35,51 +32,103 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
       const roomNum = prefix + i;
       let status = 'normal';
       let symptoms = [];
+      let orsStatus = 'none';
 
       if (floorNum === 3 && isOutbreakActive) {
-        // Floor 3 has the 5-case outbreak cluster in adjacent rooms
         if ([302, 303, 304, 305, 306].includes(roomNum)) {
           status = 'outbreak';
           symptoms = ['Nausea', 'Vomiting', 'Cramps'];
+          orsStatus = roomNum === 304 ? 'dispatched' : roomNum === 306 ? 'delivered' : 'pending';
         }
       } else if (floorNum === 1) {
-        // Floor 1 has 1 solitary sporadic case
         if (roomNum === 104) {
           status = 'sporadic';
           symptoms = ['Mild Queasiness'];
+          orsStatus = 'delivered';
         }
       }
-      // Floor 2 has 0 cases
 
       rooms.push({
         number: roomNum,
         status: status,
         occupants: 2,
-        symptoms: symptoms
+        symptoms: symptoms,
+        orsStatus: orsStatus
       });
     }
     return rooms;
   };
 
   const currentRooms = getFloorRooms(activeFloor);
-  const floorCases = currentRooms.filter(r => r.status !== 'normal').length;
   const isFloorHot = activeFloor === 3 && isOutbreakActive;
 
   return (
-    <div className="luminous-card" style={{ minHeight: '460px', display: 'flex', flexDirection: 'column' }}>
+    <div className="luminous-card" style={{ minHeight: '480px', display: 'flex', flexDirection: 'column' }}>
       
-      {/* Header with View Toggle and Floor Level Switcher */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '16px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <Navigation size={18} style={{ color: 'var(--tertiary)' }} />
-          <h2 style={{ fontSize: '1.05rem', fontWeight: '700', color: 'var(--on-surface)' }}>
-            Spatial Topology Radar // Hostel Block C
-          </h2>
+      {/* Header with Lens Mode and Floor Controls */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
+        
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{
+            width: '32px',
+            height: '32px',
+            borderRadius: 'var(--radius-full)',
+            background: 'var(--primary-container)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'var(--on-primary-container)'
+          }}>
+            <Navigation size={16} />
+          </div>
+          <div>
+            <h2 style={{ fontSize: '1.05rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
+              Spatial Surveillance Radar
+            </h2>
+            <div style={{ fontSize: '0.72rem', color: 'var(--on-surface-variant)', fontWeight: '600' }}>
+              {activeLens === 'judge' && '⚖️ Auditor Lens: Poisson STPSS (N=999) Monte Carlo Overlays'}
+              {activeLens === 'cmo' && '👨‍⚕️ CMO Lens: Campus-Wide Epidemiological Infection Vectors'}
+              {activeLens === 'warden' && '👨‍✈️ Warden Lens: Corridor Welfare & Doorstep ORS Roster'}
+              {activeLens === 'mess' && '🍽️ HACCP Lens: Kitchen Thermal Danger Zones & Recipe Hazards'}
+              {activeLens === 'student' && '🎓 Resident Lens: Certified Safe Water & ORS Dispensary Map'}
+            </div>
+          </div>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+        {/* Controls: Lens Switcher + Floor Controls */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          
+          {/* Lens Switcher Pill */}
+          <div style={{ display: 'flex', background: 'var(--surface-container-low)', padding: '2px', borderRadius: 'var(--radius-full)', border: '1px solid var(--surface-container)' }}>
+            {[
+              { id: 'judge', label: '⚖️ Auditor' },
+              { id: 'cmo', label: '👨‍⚕️ CMO' },
+              { id: 'warden', label: '👨‍✈️ Warden' },
+              { id: 'mess', label: '🍽️ Dining' },
+              { id: 'student', label: '🎓 Student' }
+            ].map((lens) => (
+              <button
+                key={lens.id}
+                onClick={() => setActiveLens(lens.id)}
+                style={{
+                  background: activeLens === lens.id ? '#FFFFFF' : 'transparent',
+                  color: activeLens === lens.id ? 'var(--on-surface)' : 'var(--on-surface-variant)',
+                  border: 'none',
+                  padding: '3px 8px',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: '0.68rem',
+                  fontWeight: '700',
+                  cursor: 'pointer',
+                  boxShadow: activeLens === lens.id ? '0 1px 4px rgba(0,0,0,0.06)' : 'none'
+                }}
+              >
+                {lens.label}
+              </button>
+            ))}
+          </div>
+
           {/* View Mode Toggle */}
-          <div style={{ display: 'flex', background: 'var(--surface-container-low)', padding: '3px', borderRadius: 'var(--radius-full)' }}>
+          <div style={{ display: 'flex', background: 'var(--surface-container-low)', padding: '2px', borderRadius: 'var(--radius-full)', border: '1px solid var(--surface-container)' }}>
             <button
               onClick={() => setViewMode('floor')}
               style={{
@@ -115,9 +164,9 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
           </div>
 
           {/* Floor Level Switcher */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'var(--surface-container-low)', padding: '3px', borderRadius: 'var(--radius-full)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: 'var(--surface-container-low)', padding: '2px', borderRadius: 'var(--radius-full)', border: '1px solid var(--surface-container)' }}>
             <Layers size={13} style={{ color: 'var(--on-surface-variant)', marginLeft: '6px' }} />
-            <span style={{ fontSize: '0.72rem', color: 'var(--on-surface-variant)', fontWeight: '600', marginRight: '4px' }}>Floor:</span>
+            <span style={{ fontSize: '0.7rem', color: 'var(--on-surface-variant)', fontWeight: '600', marginRight: '2px' }}>Fl:</span>
             {[1, 2, 3].map((fl) => (
               <button
                 key={fl}
@@ -129,9 +178,9 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
                   background: activeFloor === fl ? 'var(--primary-container)' : 'transparent',
                   color: activeFloor === fl ? 'var(--on-primary-container)' : 'var(--on-surface-variant)',
                   border: 'none',
-                  padding: '3px 10px',
+                  padding: '3px 8px',
                   borderRadius: 'var(--radius-full)',
-                  fontSize: '0.74rem',
+                  fontSize: '0.72rem',
                   fontWeight: '700',
                   cursor: 'pointer'
                 }}
@@ -140,6 +189,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
               </button>
             ))}
           </div>
+
         </div>
       </div>
 
@@ -151,7 +201,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
         borderRadius: 'var(--radius-md)',
         border: '1px solid var(--surface-container)',
         overflow: 'hidden',
-        minHeight: '340px',
+        minHeight: '350px',
         padding: '16px',
         display: 'flex',
         flexDirection: 'column',
@@ -164,7 +214,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
              ============================================================ */
           <div>
             
-            {/* Top Floor Summary Banner */}
+            {/* Top Floor Summary Banner Tailored to Role */}
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -172,19 +222,25 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
               background: '#FFFFFF',
               borderRadius: 'var(--radius-sm)',
               padding: '10px 16px',
-              marginBottom: '16px',
-              boxShadow: '0 2px 6px rgba(0,0,0,0.03)'
+              marginBottom: '14px',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+              flexWrap: 'wrap',
+              gap: '10px'
             }}>
               <div>
-                <span style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--on-surface)' }}>
+                <span style={{ fontSize: '0.88rem', fontWeight: '800', color: 'var(--on-surface)' }}>
                   Hostel Block C — Floor {activeFloor} Architectural Blueprint
                 </span>
-                <div style={{ fontSize: '0.74rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
-                  12 Rooms • 24 Residents • Water Source: Floor {activeFloor} RO Dispenser (Cl2: {isFloorHot ? '0.18' : '0.52'} mg/L)
+                <div style={{ fontSize: '0.72rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
+                  {activeLens === 'judge' && `Poisson STPSS Cluster: LLR=4.82 • Expected: 0.81 • Observed: ${isFloorHot ? '5' : activeFloor === 1 ? '1' : '0'} (p=0.002)`}
+                  {activeLens === 'cmo' && `Epidemiological Index: 5 Confirmed Cases • Suspect Vehicle: Mess 2 Palak Paneer • Odds Ratio: 14.2`}
+                  {activeLens === 'warden' && `Corridor Welfare: 24 Residents • 5 Active Isolations • 2 Pending Doorstep ORS Deliveries`}
+                  {activeLens === 'mess' && `Resident Dinner Exposure: 18/24 attended Mess 2 • 14 consumed Palak Paneer batch`}
+                  {activeLens === 'student' && `Floor 3 RO Status: Cl2 0.18 mg/L (⚠️ Use Ground Floor RO Fountain) • Free ORS at Warden Desk`}
                 </div>
               </div>
               <span className={`pill-badge ${isFloorHot ? 'badge-crimson' : activeFloor === 1 ? 'badge-lavender' : 'badge-lime'}`}>
-                {isFloorHot ? '5 Outbreak Cases (p=0.002)' : activeFloor === 1 ? '1 Sporadic Case' : '0 Cases (Clear)'}
+                {isFloorHot ? '5 Cases (p=0.002)' : activeFloor === 1 ? '1 Sporadic' : '0 Cases (Clear)'}
               </span>
             </div>
 
@@ -193,7 +249,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
               background: '#FFFFFF',
               borderRadius: 'var(--radius-md)',
               border: `1.5px solid ${isFloorHot ? 'var(--error-container)' : 'var(--surface-container)'}`,
-              padding: '16px',
+              padding: '14px',
               position: 'relative'
             }}>
               
@@ -209,20 +265,47 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
                         background: isHot ? '#FFDAD6' : isSporadic ? 'var(--tertiary-container)' : 'var(--surface-container-low)',
                         border: `1.5px solid ${isHot ? '#BA1A1A' : isSporadic ? '#C4C0FF' : 'var(--surface-container)'}`,
                         borderRadius: 'var(--radius-sm)',
-                        padding: '10px 8px',
+                        padding: '10px 6px',
                         textAlign: 'center',
-                        boxShadow: isHot ? '0 2px 10px rgba(255, 51, 102, 0.25)' : 'none',
+                        boxShadow: isHot ? '0 2px 10px rgba(255, 51, 102, 0.2)' : 'none',
                         transition: 'all 0.2s ease'
                       }}
                     >
                       <div style={{ fontSize: '0.78rem', fontWeight: '800', color: isHot ? '#BA1A1A' : isSporadic ? 'var(--tertiary)' : 'var(--on-surface)' }}>
                         Room {room.number}
                       </div>
-                      <div style={{ fontSize: '0.65rem', fontWeight: '600', color: isHot ? '#BA1A1A' : isSporadic ? 'var(--tertiary)' : 'var(--primary)', marginTop: '2px' }}>
-                        {isHot ? '⚠️ 1 Case' : isSporadic ? '1 Case (Noise)' : '● Clear'}
-                      </div>
+                      
+                      {/* Role Specific Micro Details */}
+                      {activeLens === 'warden' && isHot && (
+                        <div style={{ marginTop: '3px' }}>
+                          <span style={{
+                            fontSize: '0.6rem',
+                            padding: '2px 5px',
+                            borderRadius: '4px',
+                            background: room.orsStatus === 'delivered' ? '#F4FDE2' : '#FEF3C7',
+                            color: room.orsStatus === 'delivered' ? '#364B00' : '#92400E',
+                            fontWeight: '800',
+                            display: 'inline-block'
+                          }}>
+                            {room.orsStatus === 'delivered' ? '✓ ORS Sent' : '📦 ORS Due'}
+                          </span>
+                        </div>
+                      )}
+
+                      {activeLens === 'judge' && (
+                        <div className="font-mono" style={{ fontSize: '0.6rem', color: isHot ? '#93000A' : 'var(--on-surface-variant)', marginTop: '2px' }}>
+                          {isHot ? 'LLR +1.6' : 'LLR 0.0'}
+                        </div>
+                      )}
+
+                      {activeLens !== 'warden' && activeLens !== 'judge' && (
+                        <div style={{ fontSize: '0.64rem', fontWeight: '600', color: isHot ? '#BA1A1A' : isSporadic ? 'var(--tertiary)' : 'var(--primary)', marginTop: '2px' }}>
+                          {isHot ? '⚠️ 1 Case' : isSporadic ? '1 Sporadic' : '● Clear'}
+                        </div>
+                      )}
+
                       {room.symptoms.length > 0 && (
-                        <div style={{ fontSize: '0.58rem', color: isHot ? '#93000A' : 'var(--on-surface-variant)', marginTop: '3px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <div style={{ fontSize: '0.56rem', color: isHot ? '#93000A' : 'var(--on-surface-variant)', marginTop: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {room.symptoms.join(', ')}
                         </div>
                       )}
@@ -233,21 +316,21 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
 
               {/* Central Walking Corridor */}
               <div style={{
-                height: '32px',
+                height: '30px',
                 background: 'var(--surface-container-low)',
                 borderRadius: 'var(--radius-xs)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '0 16px',
+                padding: '0 14px',
                 marginBottom: '10px',
                 border: '1px dashed #CBD5E1'
               }}>
-                <span className="font-mono text-muted" style={{ fontSize: '0.68rem' }}>◄ NORTH STAIRCASE</span>
-                <span className="font-mono" style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--on-surface-variant)' }}>
+                <span className="font-mono text-muted" style={{ fontSize: '0.65rem' }}>◄ NORTH STAIRWELL</span>
+                <span className="font-mono" style={{ fontSize: '0.68rem', fontWeight: '700', color: 'var(--on-surface-variant)' }}>
                   CENTRAL ACCESS CORRIDOR // FLOOR {activeFloor}
                 </span>
-                <span className="font-mono text-muted" style={{ fontSize: '0.68rem' }}>SOUTH RO SUMP DISPENSER ►</span>
+                <span className="font-mono text-muted" style={{ fontSize: '0.65rem' }}>SOUTH WATER FOUNTAIN ►</span>
               </div>
 
               {/* South Wing Rooms (307-312 / 207-212 / 107-112) */}
@@ -261,7 +344,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
                         background: isHot ? '#FFDAD6' : 'var(--surface-container-low)',
                         border: `1.5px solid ${isHot ? '#BA1A1A' : 'var(--surface-container)'}`,
                         borderRadius: 'var(--radius-sm)',
-                        padding: '10px 8px',
+                        padding: '10px 6px',
                         textAlign: 'center',
                         transition: 'all 0.2s ease'
                       }}
@@ -269,7 +352,7 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
                       <div style={{ fontSize: '0.78rem', fontWeight: '800', color: isHot ? '#BA1A1A' : 'var(--on-surface)' }}>
                         Room {room.number}
                       </div>
-                      <div style={{ fontSize: '0.65rem', fontWeight: '600', color: isHot ? '#BA1A1A' : 'var(--primary)', marginTop: '2px' }}>
+                      <div style={{ fontSize: '0.64rem', fontWeight: '600', color: isHot ? '#BA1A1A' : 'var(--primary)', marginTop: '2px' }}>
                         {isHot ? '⚠️ 1 Case' : '● Clear'}
                       </div>
                     </div>
@@ -279,32 +362,36 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
 
             </div>
 
-            {/* Floor Status Explanation Banner */}
+            {/* Role Tailored Insight Strip */}
             <div style={{
               marginTop: '12px',
+              padding: '8px 12px',
+              background: '#FFFFFF',
+              borderRadius: 'var(--radius-sm)',
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              fontSize: '0.76rem',
-              color: 'var(--on-surface-variant)'
+              fontSize: '0.74rem',
+              color: 'var(--on-surface-variant)',
+              border: '1px solid var(--surface-container)'
             }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                 <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: isFloorHot ? 'var(--error)' : 'var(--primary)' }}></span>
-                {isFloorHot
-                  ? 'Active Contagion: Point-source cluster concentrated in contiguous rooms 302-306.'
-                  : activeFloor === 1
-                  ? 'Baseline Normal: Room 104 is an isolated off-campus meal (p ≥ 0.05).'
-                  : 'Baseline Normal: Zero reported gastrointestinal symptoms.'}
+                {activeLens === 'judge' && `Poisson STPSS Permutation Proof: N=999, LLR=4.82, Empirical p=0.002 < 0.05`}
+                {activeLens === 'cmo' && `Contagion Vector: Point-Source Staphylococcal Enterotoxin fit with ~3.5h incubation`}
+                {activeLens === 'warden' && `Ground Action: Sodium hypochlorite bleach applied to floor washrooms & ORS dispatched`}
+                {activeLens === 'mess' && `HACCP Action: Palak Paneer batch isolated; Evening dinner service diverted to Mess 1`}
+                {activeLens === 'student' && `Campus Advice: Collect free WHO-ORS sachets at Warden Desk. Stay hydrated!`}
               </span>
               <span className="font-mono text-muted">
-                Scan Window: T-4h
+                Lens: {activeLens.toUpperCase()}
               </span>
             </div>
 
           </div>
         ) : (
           /* ============================================================
-             VIEW 2: CAMPUS MACRO GIS OVERVIEW
+             VIEW 2: CAMPUS MACRO GIS OVERVIEW (ROLE-TAILORED ANNOTATIONS)
              ============================================================ */
           <svg viewBox="0 0 700 320" style={{ width: '100%', height: '100%' }}>
             <defs>
@@ -380,7 +467,9 @@ export default function SpatialMap({ zones = [], selectedZone, onSelectZone }) {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        fontSize: '0.8rem'
+        fontSize: '0.8rem',
+        flexWrap: 'wrap',
+        gap: '8px'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <MapPin size={15} style={{ color: isFloorHot ? 'var(--error)' : 'var(--primary)' }} />

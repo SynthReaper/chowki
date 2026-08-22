@@ -420,6 +420,7 @@ export default function App() {
               zones={radarData.zones}
               selectedZone={selectedZone}
               onSelectZone={(zId) => setSelectedZone(zId)}
+              userRole={currentUser?.role || 'cmo'}
             />
             <EpiCurve points={radarData.epi_curve} />
           </div>
