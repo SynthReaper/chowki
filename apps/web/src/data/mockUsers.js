@@ -2,7 +2,7 @@
  * @file mockUsers.js
  * @project Project CHOWKI — Campus Outbreak Surveillance System
  * @author Synthreaper | github.com/synthreaper/chowki
- * @description Role-based mock credentials and persona profiles for Hackathon Judges & Stakeholders
+ * @description Role-based mock credentials and persona profiles with strictly unique permissions
  * @lastModified 2026-08-22
  */
 
@@ -19,7 +19,7 @@ export const MOCK_USERS = [
     emoji: '⚖️',
     clearance: 'Full Algorithmic Transparency',
     defaultTab: 'simulator',
-    allowedTabs: ['simulator', 'radar', 'investigation', 'commander', 'student', 'warden', 'mess', 'dpdp'],
+    allowedTabs: ['simulator', 'radar', 'investigation', 'commander', 'warden', 'mess', 'student', 'dpdp'],
     organization: 'Hacks 11 Evaluation Committee',
     avatarBg: '#EBE9FE',
     avatarColor: '#59569D',
@@ -67,14 +67,14 @@ export const MOCK_USERS = [
     emoji: '👨‍✈️',
     clearance: 'Level 2 Floor Warden',
     defaultTab: 'warden',
-    allowedTabs: ['warden', 'student', 'radar'],
+    allowedTabs: ['warden', 'radar'],
     organization: 'Hostel Administration & Welfare',
     avatarBg: '#FEF3C7',
     avatarColor: '#92400E',
-    summary: 'Corridor-level resident welfare, room isolation allocation, doorstep ORS distribution checklist, and on-ground chlorine test strip logging.',
+    summary: 'Corridor-level resident welfare, live student pulse queue, room isolation tracking, doorstep ORS distribution, and field chlorine strip logging.',
     keyCapabilities: [
-      'Room-by-Room Resident Welfare Roster (Block C Floor 3)',
-      'Doorstep Hydration Kit Delivery Checklist',
+      'Live Resident Pulse Inflow Queue (Room 302-306)',
+      'Doorstep WHO-ORS Hydration Delivery Checklist',
       'On-Ground Field Chlorine Test Strip Logger',
       'Direct Emergency Escalation to Medical Center'
     ]
