@@ -8,7 +8,7 @@
 
 import React, { useState } from 'react';
 import { MOCK_USERS, authenticateMockUser } from '../data/mockUsers';
-import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock, Zap } from 'lucide-react';
+import { Shield, Key, ArrowRight, CheckCircle2, UserCheck, Microscope, ShieldAlert, Utensils, Activity, X, Sparkles, Lock, Zap, Radio, Sliders } from 'lucide-react';
 
 export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, isModal = false }) {
   const [activeMode, setActiveMode] = useState('personas'); // 'personas' | 'manual'
@@ -52,19 +52,19 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      padding: isModal ? '20px' : '32px 16px',
+      padding: isModal ? '20px' : '36px 16px',
       minHeight: isModal ? 'auto' : '100vh'
     }}>
       <div
         className="luminous-card"
         style={{
           width: '100%',
-          maxWidth: '1120px',
+          maxWidth: '1140px',
           maxHeight: isModal ? '90vh' : 'none',
           overflowY: 'auto',
-          padding: isModal ? '32px' : '40px 36px',
+          padding: isModal ? '32px' : '44px 40px',
           borderRadius: 'var(--radius-xl)',
-          boxShadow: isModal ? '0 20px 60px rgba(0, 0, 0, 0.2)' : '0 12px 48px rgba(0, 0, 0, 0.05)',
+          boxShadow: isModal ? '0 20px 60px rgba(0, 0, 0, 0.2)' : '0 16px 48px rgba(0, 0, 0, 0.04)',
           border: '1.5px solid var(--surface-container-high)',
           background: '#FFFFFF',
           position: 'relative'
@@ -95,69 +95,102 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
           </button>
         )}
 
-        {/* Brand Header for Landing Screen */}
-        {!isModal && (
-          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <div style={{
-              width: '68px',
-              height: '68px',
-              borderRadius: 'var(--radius-full)',
-              background: '#FFFFFF',
-              border: '3px solid var(--primary-container)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 8px 24px var(--primary-glow)',
-              marginBottom: '14px'
-            }}>
-              <img
-                src="/chowki.png"
-                alt="CHOWKI Logo"
-                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
-            </div>
-            <h1 style={{ fontSize: '2rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.03em', lineHeight: 1.1 }}>
-              PROJECT CHOWKI
-            </h1>
-            <p style={{ fontSize: '0.88rem', color: 'var(--on-surface-variant)', fontWeight: '600', marginTop: '4px' }}>
-              Continuous Health Observation & Water-Kitchen Intelligence Radar
-            </p>
-          </div>
-        )}
-
-        {/* Portal Header */}
-        <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+        {/* Unified Hero Header */}
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          
+          {/* Logo Badge Container */}
           <div style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: '8px',
-            background: 'var(--primary-container)',
-            color: 'var(--on-primary-container)',
-            padding: '6px 16px',
+            justifyContent: 'center',
+            padding: '10px 18px',
+            background: 'linear-gradient(135deg, #FFFFFF 0%, var(--surface-container-low) 100%)',
+            border: '1.5px solid var(--primary-container)',
             borderRadius: 'var(--radius-full)',
-            fontSize: '0.78rem',
-            fontWeight: '800',
-            marginBottom: '12px'
+            boxShadow: '0 6px 20px var(--primary-glow)',
+            marginBottom: '16px',
+            gap: '12px'
           }}>
-            <Sparkles size={14} />
-            HACKATHON GRAND JURY & STAKEHOLDER ROLE GATEWAY
+            <img
+              src="/chowki.png"
+              alt="CHOWKI Logo"
+              style={{
+                width: '32px',
+                height: '32px',
+                objectFit: 'contain',
+                borderRadius: '6px'
+              }}
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
+            <span style={{
+              fontSize: '0.82rem',
+              fontWeight: '800',
+              color: 'var(--on-surface)',
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase'
+            }}>
+              Project CHOWKI Suite
+            </span>
           </div>
+
+          <h1 style={{
+            fontSize: isModal ? '1.75rem' : '2.3rem',
+            fontWeight: '800',
+            color: 'var(--on-surface)',
+            letterSpacing: '-0.03em',
+            lineHeight: 1.15,
+            marginBottom: '8px'
+          }}>
+            {isModal ? 'Switch Stakeholder Perspective' : 'Bio-Spatiotemporal Outbreak Surveillance Radar'}
+          </h1>
           
-          <h2 style={{ fontSize: isModal ? '1.5rem' : '1.75rem', fontWeight: '800', color: 'var(--on-surface)', letterSpacing: '-0.02em' }}>
-            {isModal ? 'Switch Stakeholder Perspective' : 'Select Your Role & Launch Dedicated Dashboard'}
-          </h2>
-          <p style={{ fontSize: '0.86rem', color: 'var(--on-surface-variant)', maxWidth: '720px', margin: '6px auto 0 auto' }}>
-            Every role in Project CHOWKI receives a tailored operational dashboard with role-specific telemetry, permissions, and containment powers. Select an evaluator persona below for instant 1-click entry.
+          <p style={{
+            fontSize: '0.92rem',
+            color: 'var(--on-surface-variant)',
+            maxWidth: '740px',
+            margin: '0 auto 16px auto',
+            lineHeight: 1.5,
+            fontWeight: '500'
+          }}>
+            Continuous Health Observation & Water-Kitchen Intelligence for Indian Educational Campuses. Select a stakeholder persona below to enter their specialized operational workspace.
           </p>
 
+          {/* Engine Capability Pills */}
+          {!isModal && (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', marginBottom: '20px' }}>
+              <span className="pill-badge badge-lime" style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                <span className="pulse-dot-green"></span>
+                Dual-Engine AI Active
+              </span>
+              <span className="telemetry-chip">
+                <Radio size={12} style={{ color: 'var(--primary)' }} />
+                <span>Poisson STPSS ($N=999, p&lt;0.05$)</span>
+              </span>
+              <span className="telemetry-chip">
+                <Microscope size={12} style={{ color: 'var(--tertiary)' }} />
+                <span>Bayesian Pathogen Attribution</span>
+              </span>
+              <span className="telemetry-chip">
+                <Lock size={12} style={{ color: '#59569D' }} />
+                <span>DPDP Act 2023 Compliant</span>
+              </span>
+            </div>
+          )}
+
           {/* Mode Switcher */}
-          <div style={{ display: 'inline-flex', gap: '6px', background: 'var(--surface-container-low)', padding: '4px', borderRadius: 'var(--radius-full)', marginTop: '18px' }}>
+          <div style={{
+            display: 'inline-flex',
+            gap: '6px',
+            background: 'var(--surface-container-low)',
+            padding: '4px',
+            borderRadius: 'var(--radius-full)',
+            border: '1px solid var(--surface-container)'
+          }}>
             <button
               type="button"
               onClick={() => setActiveMode('personas')}
               style={{
-                padding: '6px 18px',
+                padding: '7px 20px',
                 borderRadius: 'var(--radius-full)',
                 border: 'none',
                 fontSize: '0.8rem',
@@ -165,7 +198,8 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                 cursor: 'pointer',
                 background: activeMode === 'personas' ? '#FFFFFF' : 'transparent',
                 color: activeMode === 'personas' ? 'var(--on-surface)' : 'var(--on-surface-variant)',
-                boxShadow: activeMode === 'personas' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none'
+                boxShadow: activeMode === 'personas' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.15s ease'
               }}
             >
               ⚡ 1-Click Role Login ({MOCK_USERS.length})
@@ -174,7 +208,7 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
               type="button"
               onClick={() => setActiveMode('manual')}
               style={{
-                padding: '6px 18px',
+                padding: '7px 20px',
                 borderRadius: 'var(--radius-full)',
                 border: 'none',
                 fontSize: '0.8rem',
@@ -182,7 +216,8 @@ export default function JudgeAuthPortal({ currentUser, onSelectUser, onClose, is
                 cursor: 'pointer',
                 background: activeMode === 'manual' ? '#FFFFFF' : 'transparent',
                 color: activeMode === 'manual' ? 'var(--on-surface)' : 'var(--on-surface-variant)',
-                boxShadow: activeMode === 'manual' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none'
+                boxShadow: activeMode === 'manual' ? '0 2px 8px rgba(0,0,0,0.06)' : 'none',
+                transition: 'all 0.15s ease'
               }}
             >
               🔑 Manual Mock Login Form
