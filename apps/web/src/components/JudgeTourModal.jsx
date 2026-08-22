@@ -120,11 +120,11 @@ export default function JudgeTourModal({ isOpen, onClose, onNavigateTab }) {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={13} style={{ color: 'var(--primary)' }} />
-              <span><strong>RO Shock Chlorination:</strong> Auto-elevates free chlorine to $2.0\text{ mg/L}$.</span>
+              <span><strong>RO Shock Chlorination:</strong> Auto-elevates free chlorine to 2.0 mg/L.</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
               <CheckCircle2 size={13} style={{ color: 'var(--primary)' }} />
-              <span><strong>Geo-Fenced Advisory:</strong> Sends SMS/WhatsApp only to Block C residents ($k \ge 5$).</span>
+              <span><strong>Geo-Fenced Advisory:</strong> Sends SMS/WhatsApp only to Block C residents (k &ge; 5).</span>
             </div>
           </div>
         </div>
