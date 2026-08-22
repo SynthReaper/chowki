@@ -2,13 +2,13 @@
  * @component App
  * @project Project CHOWKI — Campus Outbreak Surveillance System
  * @author Synthreaper | github.com/synthreaper/chowki
- * @description Multi-Panel Outbreak Intelligence & Cause-Solving Dashboard Controller
+ * @description Multi-Panel Outbreak Intelligence & Role-Based Dashboard Controller
  * @lastModified 2026-08-22
  */
 
 import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
-import ScenarioSimulator from './components/ScenarioSimulator';
+import JudgeArena from './components/JudgeArena';
 import SpatialMap from './components/SpatialMap';
 import EpiCurve from './components/EpiCurve';
 import PathogenProfiler from './components/PathogenProfiler';
@@ -19,11 +19,27 @@ import StudentCheckIn from './components/StudentCheckIn';
 import WardenPanel from './components/WardenPanel';
 import MessPortal from './components/MessPortal';
 import PrivacyHub from './components/PrivacyHub';
+import JudgeAuthPortal from './components/JudgeAuthPortal';
+import { MOCK_USERS, getPersonaById } from './data/mockUsers';
 import { fetchLiveRadar } from './api/client';
-import { Shield, Activity, Users, AlertTriangle, CheckCircle2, ArrowUpRight, Droplets, Utensils, Lock, Microscope, ShieldAlert, Sliders, ArrowRight, Sparkles, Radio } from 'lucide-react';
+import { Shield, Activity, Users, AlertTriangle, CheckCircle2, ArrowUpRight, Droplets, Utensils, Lock, Microscope, ShieldAlert, Sliders, ArrowRight, Sparkles, Radio, RefreshCw, User } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState('radar'); // 'radar' | 'investigation' | 'commander' | 'simulator' | 'student' | 'warden' | 'mess' | 'dpdp'
+  // Authentication & Persona state
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('chowki_current_user');
+      return saved ? JSON.parse(saved) : MOCK_USERS[0]; // Default to Grand Jury
+    } catch {
+      return MOCK_USERS[0];
+    }
+  });
+  const [isPersonaModalOpen, setIsPersonaModalOpen] = useState(false);
+
+  // Active Tab state
+  const [activeTab, setActiveTab] = useState(() => currentUser?.defaultTab || 'simulator');
+  
+  // Live Radar State
   const [radarData, setRadarData] = useState({
     system_status: 'All Sensors Online 🟢',
     total_reports_24h: 0,
@@ -52,20 +68,115 @@ export default function App() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSelectUser = (user) => {
+    setCurrentUser(user);
+    try {
+      localStorage.setItem('chowki_current_user', JSON.stringify(user));
+    } catch {}
+    setActiveTab(user.defaultTab || 'radar');
+    setIsPersonaModalOpen(false);
+  };
+
+  const handleLogout = () => {
+    setCurrentUser(null);
+    try {
+      localStorage.removeItem('chowki_current_user');
+    } catch {}
+  };
+
+  const handleSwitchPersonaFromArena = (personaId) => {
+    const user = getPersonaById(personaId);
+    handleSelectUser(user);
+  };
+
+  // If user is logged out, show the full login portal
+  if (!currentUser) {
+    return (
+      <div className="luminous-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <JudgeAuthPortal
+          currentUser={null}
+          onSelectUser={handleSelectUser}
+          isModal={false}
+        />
+      </div>
+    );
+  }
+
   const isAlert = radarData.highest_alert_level >= 2;
 
   return (
     <div className="luminous-container">
       
-      {/* 1. Sleek Navigation Header (Zero Scrollbars) */}
+      {/* 1. Sleek Navigation Header with Persona Profile Pill */}
       <Header
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         systemStatus={radarData.system_status}
         highestAlertLevel={radarData.highest_alert_level}
+        currentUser={currentUser}
+        onOpenPersonaModal={() => setIsPersonaModalOpen(true)}
+        onLogout={handleLogout}
       />
 
-      {/* 2. Premium Multi-Chip Telemetry Status Bar (Zero Scrollbars) */}
+      {/* 2. Contextual Persona Mandate Banner */}
+      <div style={{
+        background: 'linear-gradient(135deg, #FFFFFF 0%, var(--surface-container-low) 100%)',
+        border: '1px solid var(--surface-container)',
+        borderRadius: 'var(--radius-lg)',
+        padding: '12px 20px',
+        marginBottom: '16px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        gap: '12px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.02)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{
+            width: '34px',
+            height: '34px',
+            borderRadius: 'var(--radius-full)',
+            background: currentUser.avatarBg,
+            color: currentUser.avatarColor,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '1.1rem',
+            fontWeight: '800',
+            flexShrink: 0
+          }}>
+            {currentUser.emoji}
+          </div>
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '0.86rem', fontWeight: '800', color: 'var(--on-surface)' }}>
+                Active Perspective: {currentUser.name} ({currentUser.roleLabel})
+              </span>
+              <span className={`pill-badge ${currentUser.badgeClass}`} style={{ fontSize: '0.66rem', padding: '2px 8px' }}>
+                {currentUser.clearance}
+              </span>
+            </div>
+            <p style={{ fontSize: '0.74rem', color: 'var(--on-surface-variant)', marginTop: '2px' }}>
+              {currentUser.summary}
+            </p>
+          </div>
+        </div>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <button
+            type="button"
+            onClick={() => setIsPersonaModalOpen(true)}
+            className="btn-ghost-pill"
+            style={{ fontSize: '0.74rem', padding: '5px 12px' }}
+          >
+            <RefreshCw size={11} />
+            Switch Perspective
+          </button>
+        </div>
+      </div>
+
+      {/* 3. Premium Multi-Chip Telemetry Status Bar */}
       <div className="luminous-ticker-bar">
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <span className={isAlert ? 'pulse-dot-red' : 'pulse-dot-green'}></span>
@@ -103,7 +214,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* 3. Panel Views */}
+      {/* 4. Panel Views */}
       
       {/* ============================================================
           PANEL 1: SURVEILLANCE & EARLY WARNING RADAR (WAR ROOM)
@@ -194,7 +305,7 @@ export default function App() {
               <ArrowRight size={16} style={{ color: isAlert ? '#BA1A1A' : 'var(--on-surface-variant)' }} />
             </div>
 
-            {/* Quick Card 3: Benchmark Simulator Arena */}
+            {/* Quick Card 3: Judge Arena */}
             <div
               onClick={() => setActiveTab('simulator')}
               className="luminous-card"
@@ -224,10 +335,10 @@ export default function App() {
                 </div>
                 <div>
                   <div style={{ fontSize: '0.9rem', fontWeight: '800', color: 'var(--on-surface)' }}>
-                    Benchmark Arena
+                    Judge Evaluation Arena
                   </div>
                   <div style={{ fontSize: '0.74rem', color: 'var(--on-surface-variant)' }}>
-                    Scenario A vs Scenario B Live Trigger
+                    Scenario A vs Scenario B Live Math
                   </div>
                 </div>
               </div>
@@ -236,7 +347,7 @@ export default function App() {
 
           </div>
 
-          {/* Top KPI Metrics Cards (Luminous Health Style) */}
+          {/* Top KPI Metrics Cards */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px', marginBottom: '20px' }}>
             
             {/* Metric 1: Total Reports */}
@@ -359,71 +470,13 @@ export default function App() {
       )}
 
       {/* ============================================================
-          PANEL 4: BENCHMARK ARENA & SCENARIO SIMULATOR
+          PANEL 4: HACKATHON GRAND JURY ARENA & BENCHMARK SIMULATOR
           ============================================================ */}
       {activeTab === 'simulator' && (
-        <div>
-          <ScenarioSimulator onScenarioTriggered={refreshRadar} />
-          
-          {/* Scientific Proof Breakdown Table */}
-          <div className="luminous-card" style={{ marginTop: '20px' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: '800', color: 'var(--on-surface)', marginBottom: '8px' }}>
-              Dual-Engine Disambiguation Truth Table: Food Outbreak vs Coincidental Noise
-            </h3>
-            <p style={{ fontSize: '0.8rem', color: 'var(--on-surface-variant)', marginBottom: '16px' }}>
-              Side-by-side mathematical benchmark proving how CHOWKI prevents false alarms during exam weeks.
-            </p>
-
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.82rem' }}>
-                <thead>
-                  <tr style={{ background: 'var(--surface-container-low)', textAlign: 'left', borderBottom: '1px solid var(--surface-container)' }}>
-                    <th style={{ padding: '12px', fontWeight: '700' }}>Surveillance Dimension</th>
-                    <th style={{ padding: '12px', fontWeight: '700', color: '#BA1A1A' }}>Scenario A: True Point-Source Food Outbreak</th>
-                    <th style={{ padding: '12px', fontWeight: '700', color: 'var(--primary)' }}>Scenario B: Coincidental Exam Noise / Stress</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>Spatial Distribution</td>
-                    <td style={{ padding: '12px' }}>Concentrated in <strong>Hostel Block C, Floor 3</strong> (Adjacent rooms)</td>
-                    <td style={{ padding: '12px' }}>Scattered across <strong>Block A, B, C, D</strong> (1 case per block)</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>Temporal Dynamics</td>
-                    <td style={{ padding: '12px' }}>Acute spike within 4-hour window (&Delta;t = 3.5h)</td>
-                    <td style={{ padding: '12px' }}>Evenly dispersed over 24 hours (No temporal cluster)</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>STPSS Poisson p-Value</td>
-                    <td style={{ padding: '12px', fontFamily: 'var(--font-mono)', fontWeight: '800', color: '#BA1A1A' }}>p = 0.002 (Statistically Significant &lt; 0.05)</td>
-                    <td style={{ padding: '12px', fontFamily: 'var(--font-mono)', fontWeight: '700', color: 'var(--primary)' }}>p = 0.88 (Within Poisson Random Chance)</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>Meal Exposure Link</td>
-                    <td style={{ padding: '12px' }}>100% ate <strong>Mess 2 Palak Paneer</strong> (Odds Ratio = 14.2)</td>
-                    <td style={{ padding: '12px' }}>Diverse meals: Maggie, Dal Tadka, External Canteen, Fruit</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>Symptom Co-occurrence</td>
-                    <td style={{ padding: '12px' }}>Severe Upper GI: Nausea + Projectile Vomiting + Cramps</td>
-                    <td style={{ padding: '12px' }}>Non-specific: Acidity, Headache, Mild Stress Indigestion</td>
-                  </tr>
-                  <tr style={{ borderBottom: '1px solid var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '700' }}>Water Telemetry Prior</td>
-                    <td style={{ padding: '12px' }}>Free Chlorine dipped to <strong>0.18 mg/L</strong> (Elevates Prior)</td>
-                    <td style={{ padding: '12px' }}>Free Chlorine optimal at <strong>0.52 mg/L</strong></td>
-                  </tr>
-                  <tr style={{ background: 'var(--surface-container-low)' }}>
-                    <td style={{ padding: '12px', fontWeight: '800' }}>CHOWKI Final Decision</td>
-                    <td style={{ padding: '12px', fontWeight: '800', color: '#BA1A1A' }}>🚨 LEVEL 2 TARGETED OUTBREAK CONTAINMENT</td>
-                    <td style={{ padding: '12px', fontWeight: '800', color: 'var(--primary)' }}>🟢 BASELINE SAFE — NO FALSE ALARM ISSUED</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
+        <JudgeArena
+          onScenarioTriggered={refreshRadar}
+          onSwitchPersona={handleSwitchPersonaFromArena}
+        />
       )}
 
       {/* ============================================================
@@ -454,7 +507,17 @@ export default function App() {
         <PrivacyHub />
       )}
 
-      {/* 4. Footer Attribution */}
+      {/* 5. Persona Switcher Modal Overlay */}
+      {isPersonaModalOpen && (
+        <JudgeAuthPortal
+          currentUser={currentUser}
+          onSelectUser={handleSelectUser}
+          onClose={() => setIsPersonaModalOpen(false)}
+          isModal={true}
+        />
+      )}
+
+      {/* 6. Footer Attribution */}
       <footer style={{
         marginTop: '44px',
         paddingTop: '20px',
