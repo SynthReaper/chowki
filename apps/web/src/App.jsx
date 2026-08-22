@@ -79,16 +79,63 @@ export default function App() {
     handleSelectUser(user);
   };
 
+  const handleStartTour = () => {
+    if (!currentUser) {
+      const judgeUser = getPersonaById('judge');
+      setCurrentUser(judgeUser);
+      setActiveTab('simulator');
+    }
+    setIsTourOpen(true);
+  };
+
   // FIRST SCREEN: If user is not logged in, show the Role Designation Gateway
   if (!currentUser) {
     return (
-      <div className="luminous-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="luminous-container" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
         <JudgeAuthPortal
           currentUser={null}
           onSelectUser={handleSelectUser}
           isModal={false}
           radarData={radarData}
           highestAlertLevel={radarData.highest_alert_level}
+          onStartTour={handleStartTour}
+        />
+
+        {/* Floating 60-Second Tour Trigger Pill on Landing Page */}
+        <button
+          type="button"
+          onClick={handleStartTour}
+          className="pill-button"
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            zIndex: 9000,
+            background: 'linear-gradient(135deg, var(--primary) 0%, #364B00 100%)',
+            color: '#FFFFFF',
+            padding: '12px 20px',
+            borderRadius: 'var(--radius-full)',
+            fontSize: '0.84rem',
+            fontWeight: '800',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: '0 8px 28px rgba(81, 102, 0, 0.4)',
+            border: '2px solid rgba(255, 255, 255, 0.25)',
+            cursor: 'pointer',
+            transition: 'transform 0.2s ease'
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1.0)'; }}
+        >
+          <Sparkles size={16} />
+          <span>60s Grand Jury Tour 🚀</span>
+        </button>
+
+        <JudgeTourModal
+          isOpen={isTourOpen}
+          onClose={() => setIsTourOpen(false)}
+          onNavigateTab={(t) => setActiveTab(t)}
         />
       </div>
     );
@@ -108,6 +155,7 @@ export default function App() {
         currentUser={currentUser}
         onOpenPersonaModal={() => setIsPersonaModalOpen(true)}
         onLogout={handleLogout}
+        onStartTour={handleStartTour}
       />
 
       {/* 2. Contextual Persona Mandate Banner */}

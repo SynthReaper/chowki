@@ -16,7 +16,8 @@ export default function JudgeAuthPortal({
   onClose,
   isModal = false,
   radarData = null,
-  highestAlertLevel = 0
+  highestAlertLevel = 0,
+  onStartTour
 }) {
   const [activeMode, setActiveMode] = useState('personas'); // 'personas' | 'manual'
   const [email, setEmail] = useState('judge@hackathon.ai');
@@ -242,8 +243,33 @@ export default function JudgeAuthPortal({
             background: 'var(--surface-container-low)',
             padding: '4px',
             borderRadius: 'var(--radius-full)',
-            border: '1px solid var(--surface-container)'
+            border: '1px solid var(--surface-container)',
+            flexWrap: 'wrap',
+            justifyContent: 'center'
           }}>
+            {onStartTour && (
+              <button
+                type="button"
+                onClick={onStartTour}
+                style={{
+                  padding: '7px 20px',
+                  borderRadius: 'var(--radius-full)',
+                  border: 'none',
+                  fontSize: '0.8rem',
+                  fontWeight: '800',
+                  cursor: 'pointer',
+                  background: 'linear-gradient(135deg, var(--primary) 0%, #364B00 100%)',
+                  color: '#FFFFFF',
+                  boxShadow: '0 2px 10px var(--primary-glow)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px'
+                }}
+              >
+                <Sparkles size={14} />
+                <span>🚀 60s Grand Jury Tour</span>
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setActiveMode('personas')}

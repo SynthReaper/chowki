@@ -17,7 +17,8 @@ export default function Header({
   highestAlertLevel,
   currentUser,
   onOpenPersonaModal,
-  onLogout
+  onLogout,
+  onStartTour
 }) {
   const [timeStr, setTimeStr] = useState('');
 
@@ -136,6 +137,30 @@ export default function Header({
               <Clock size={12} style={{ color: 'var(--primary)' }} />
               {timeStr} IST
             </div>
+
+            {/* 60-Second Grand Jury Tour Trigger Button in Header */}
+            {onStartTour && (
+              <button
+                type="button"
+                onClick={onStartTour}
+                className="btn-lime"
+                style={{
+                  padding: '6px 14px',
+                  fontSize: '0.76rem',
+                  fontWeight: '800',
+                  borderRadius: 'var(--radius-full)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  boxShadow: '0 2px 10px var(--primary-glow)',
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                <Sparkles size={13} />
+                <span>60s Judge Tour 🚀</span>
+              </button>
+            )}
 
             {/* Current Logged-in Persona Badge */}
             {currentUser && (
